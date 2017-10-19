@@ -15,6 +15,4 @@ $router->get('/', function() use ($router) {
     return response()->json(['error' => 'Unauthorized'], 401);
 });
 
-$router->post('/mail', function() use ($router) {
-    return response()->json(['error' => 'Insufficiant information']);
-});
+$router->post('/mail', 'MailController@send');
