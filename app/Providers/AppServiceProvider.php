@@ -3,17 +3,15 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Carbon\Carbon;
 
 class AppServiceProvider extends ServiceProvider
-{
-    public function __construct()
-    {
-        //
-    }
-    
+{    
     public function register()
     {
-        //
+        // $this->app->singleton('mailer', function ($app) {
+        //     $app->configure('services');
+        //     return $app->loadComponent('mail', 'Illuminate\Mail\MailServiceProvider', 'mailer');
+        //     });
+        //     $this->app->alias('mailer','Illuminate\Mail\Mailer');
     }
 }

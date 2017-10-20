@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Inquiry;
+use App\Mail\InquiryRecieved;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class MailController extends Controller
 {
@@ -39,7 +42,11 @@ class MailController extends Controller
         setlocale(LC_ALL, config('app.locale'));
         $data['date'] = Carbon::now()->formatLocalized('%A, %d.%m.%Y um %H:%M Uhr');
 
-        
+        Mail::to('spam@dailysh.it')
+            ->send(new InquiryRecieved(new Inquiry));
+
+        // dd(Mail::raw('test'));
+
 
         return response($data, 200);
     }
