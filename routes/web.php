@@ -12,7 +12,9 @@
 */
 
 $router->get('/', function() use ($router) {
-    return response()->json(['error' => 'Unauthorized'], 401);
+    return 'www.dailysh.it - API powered by NEXTLEVELSHIT';
 });
+
+$router->post('/', 'MailController@send');
 
 $router->post('/mail', 'MailController@send');
