@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Inquiry;
 use App\Mail\InquiryRecieved;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -29,7 +28,7 @@ class MailController extends Controller
             'mail' => 'required|email',
             'title' => 'required',
             'format' => 'required',
-            'oriantation' => 'required',
+            'orientation' => 'required',
             'material' => 'required',
             'pages' => 'required',
             'printing' => 'required',
@@ -38,16 +37,15 @@ class MailController extends Controller
         ]);
 
         $data = $request->all();
-        
-        setlocale(LC_ALL, config('app.locale'));
-        $data['date'] = Carbon::now()->formatLocalized('%A, %d.%m.%Y um %H:%M Uhr');
+
+        $inquiry = new Inquiry($request->all());
 
         Mail::to('spam@dailysh.it')
-            ->send(new InquiryRecieved(new Inquiry));
+            ->send(new InquiryRecieved($inquiry));
 
         // dd(Mail::raw('test'));
 
 
-        return response($data, 200);
+        return response($inquiry, 200);
     }
 }

@@ -82,10 +82,50 @@
 </div>
 
 @section('content')
+	Es wurde eine Anfrage von muellerpints.de am <strong>{{ $date }}</strong> verschickt:
+	<table>
+		<tr>
+			<td>Name</td>
+			<td>{{ $inquiry['name'] }}</td>
+		</tr>
+		<tr>
+			<td>Telefonnummer</td>
+			<td>{{ $inquiry['phone'] }}</td>
+		</tr>
+		<tr>
+			<td>E-Mail-Adresse</td>
+			<td>{{ $inquiry['mail'] }}</td>
+		</tr>
+		<tr>
+			<td>Format</td>
+			<td>{{ $inquiry['format'] }}</td>
+		</tr>
+		<tr>
+			<td>Ausrichtung</td>
+			<td>{{ $inquiry['orientation'] }}</td>
+		</tr>
+		<tr>
+			<td>Papier</td>
+			<td>{{ $inquiry['material'] }}</td>
+		</tr>
+		<tr>
+			<td>Seiten</td>
+			<td>{{ $inquiry['pages'] }}</td>
+		</tr>
+		<tr>
+			<td>Ausdruck</td>
+			<td>{{ $inquiry['printing'] }}</td>
+		</tr>
+		<tr>
+			<td>Farben</td>
+			<td>{{ $inquiry['colors'] }}</td>
+		</tr>
+		<tr>
+			<td>Auflage</td>
+			<td>{{ $inquiry['edition'] }}</td>
+		</tr>
+	</table>
 @show
-
-
-
 
 <div class="block">
 	<!-- Start of preheader -->

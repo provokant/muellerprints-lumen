@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Inquiry;
+use Carbon\Carbon;
 use Illuminate\Mail\Mailable;
 
 class InquiryRecieved extends Mailable
@@ -16,6 +17,12 @@ class InquiryRecieved extends Mailable
 
   public function build()
   {
-    return $this->view('mails.inquiry');
+    setlocale(LC_ALL, config('app.locale'));
+
+    // dd($this->inquiry);
+    return $this->view('mails.inquiry', [
+      'inquiry' => $this->inquiry,
+      'date' => Carbon::now()->formatLocalized('%A, %d.%m.%Y um %H:%M Uhr')
+    ]);
   }
 }
