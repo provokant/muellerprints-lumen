@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Inquiry;
 use App\Mail\InquiryRecieved;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -29,6 +30,7 @@ class MailController extends Controller
             'title' => 'required',
             'format' => 'required',
             'orientation' => 'required',
+            'product' => 'required',
             'material' => 'required',
             'pages' => 'required',
             'printing' => 'required',
@@ -36,16 +38,21 @@ class MailController extends Controller
             'edition' => 'required'
         ]);
 
-        $data = $request->all();
+        $mail = [
+            'inquiry' => new Inquiry($request->all()), 
+            'date' => Carbon::now()->formatLocalized('%d.%m.%Y um %H:%M Uhr')
+        ];
 
-        $inquiry = new Inquiry($request->all());
+        Mail::send('mails.inquiry', $mail, function ($m) {
+            $m->to(env('MAIL_TO'));
+            $m->subject('Anfrage von muellerprints.de');
+        });
 
-        Mail::to('spam@dailysh.it')
-            ->send(new InquiryRecieved($inquiry));
+        Mail::send('mails.confirmation', $mail, function ($m) use ($mail) {
+            $m->to($mail['inquiry']['mail']);
+            $m->subject('Bestätigung Ihrer Anfrage auf muellerprints.de');
+        });
 
-        // dd(Mail::raw('test'));
-
-
-        return response($inquiry, 200);
+        return response($mail['inquiry'], 200);
     }
 }

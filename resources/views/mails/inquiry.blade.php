@@ -103,32 +103,40 @@
 			<td>{{ $inquiry['mail'] }}</td>
 		</tr>
 		<tr>
+			<td>Produkt: </td>
+			<td>{{ $inquiry['product'] }}</td>
+		</tr>
+		<tr>
 			<td>Format: </td>
 			<td>{{ $inquiry['format'] }}</td>
+		</tr>
+		<tr>
+			<td>Seitenanzahl: </td>
+			<td>{{ $inquiry['pages'] }}</td>
 		</tr>
 		<tr>
 			<td>Ausrichtung: </td>
 			<td>{{ $inquiry['orientation'] }}</td>
 		</tr>
 		<tr>
-			<td>Papier: </td>
-			<td>{{ $inquiry['material'] }}</td>
-		</tr>
-		<tr>
-			<td>Seiten: </td>
-			<td>{{ $inquiry['pages'] }}</td>
-		</tr>
-		<tr>
-			<td>Ausdruck: </td>
+			<td>Druck: </td>
 			<td>{{ $inquiry['printing'] }}</td>
 		</tr>
 		<tr>
-			<td>Farben: </td>
+			<td>Farbe: </td>
 			<td>{{ $inquiry['colors'] }}</td>
+		</tr>
+		<tr>
+			<td>Papier & Gewicht: </td>
+			<td>{{ $inquiry['material'] }}</td>
 		</tr>
 		<tr>
 			<td>Auflage: </td>
 			<td>{{ $inquiry['edition'] }}</td>
+		</tr>
+		<tr>
+			<td>Objektbeschreibung: </td>
+			<td>{{ $inquiry['description'] }}</td>
 		</tr>
 	</table>
 @show

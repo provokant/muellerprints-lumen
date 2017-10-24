@@ -15,6 +15,7 @@ class Inquiry extends Model {
     'orientation',
     'material',
     'pages',
+    'product',
     'printing',
     'colors',
     'edition',
