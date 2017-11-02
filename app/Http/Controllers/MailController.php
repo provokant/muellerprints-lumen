@@ -35,7 +35,7 @@ class MailController extends Controller
             'pages' => 'required',
             'printing' => 'required',
             'colors' => 'required',
-            'edition' => 'required'
+            'edition' => 'required',
         ]);
 
         $mail = [
