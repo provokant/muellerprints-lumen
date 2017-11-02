@@ -15,4 +15,6 @@ $router->get('/', function() use ($router) {
     return 'API powered by NEXTLEVELSHIT (www.dailysh.it) · mail@dailysh.it for questions';
 });
 
+$router->post('/', 'MailController@send');
+
 $router->post('/mail', 'MailController@send');
