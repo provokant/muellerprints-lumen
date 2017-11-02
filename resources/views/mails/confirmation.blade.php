@@ -105,6 +105,10 @@
 			<td>{{ $inquiry['mail'] }}</td>
 		</tr>
 		<tr>
+			<td>Stichwort: </td>
+			<td>{{ $inquiry['title'] }}</td>
+		</tr>
+		<tr>
 			<td>Produkt: </td>
 			<td>{{ $inquiry['product'] }}</td>
 		</tr>
