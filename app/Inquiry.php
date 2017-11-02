@@ -19,7 +19,8 @@ class Inquiry extends Model {
     'printing',
     'colors',
     'edition',
-    'date'
+    'date',
+    'description'
   ];
 
   protected $hidden = [
