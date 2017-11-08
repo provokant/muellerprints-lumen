@@ -18,3 +18,5 @@ $router->get('/', function() use ($router) {
 $router->post('/', 'MailController@send');
 
 $router->post('/mail', 'MailController@send');
+
+$router->post('/order', 'OrderController@send');

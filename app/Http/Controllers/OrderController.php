@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Inquiry;
-use App\Mail\InquiryRecieved;
+use App\Order;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
-class MailController extends Controller
+class OrderController extends Controller
 {
     public function __construct() 
     {
@@ -43,14 +42,14 @@ class MailController extends Controller
             'date' => Carbon::now()->formatLocalized('%d.%m.%Y um %H:%M Uhr')
         ];
 
-        Mail::send('mails.inquiry.admin', $mail, function ($m) {
+        Mail::send('mails.order.admin', $mail, function ($m) {
             $m->to(env('MAIL_TO'));
-            $m->subject('Anfrage von muellerprints.de');
+            $m->subject('Bestellung auf notizbücher-shop.com');
         });
 
-        Mail::send('mails.inquiry.confirmation', $mail, function ($m) use ($mail) {
+        Mail::send('mails.order.confirmation', $mail, function ($m) use ($mail) {
             $m->to($mail['inquiry']['mail']);
-            $m->subject('Bestätigung Ihrer Anfrage auf muellerprints.de');
+            $m->subject('Bestellbestätigung auf notizbücher-shop.com');
         });
 
         return response($mail['inquiry'], 200);
