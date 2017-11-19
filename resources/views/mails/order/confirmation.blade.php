@@ -87,69 +87,80 @@
 	<tr>
 		<td bgcolor="#fff" style="padding: 20px 0;">
 
-@section('content')
-  <p><strong>Vielen Dank für Ihre Anfrage auf muellerprints.de!</strong></p>
-  <p></p>
-	Zusammenfassung Ihrer Anfrage vom <strong>{{ $date }}</strong>:
-	<table width="100%" cellpadding="0" cellspacing="0" border="0" class="devicewidth" hlitebg="edit" shadow="edit" style="font-family: Helvetica, Arial, sans-serif; font-size: 14px; line-height: 18px; padding: 20px 0;">
-		<tr>
-			<td width="30%">Name: </td>
-			<td width="70%">{{ $inquiry['name'] }}</td>
-		</tr>
-		<tr>
-			<td>Telefonnummer: </td>
-			<td>{{ $inquiry['phone'] }}</td>
-		</tr>
-		<tr>
-			<td>E-Mail-Adresse: </td>
-			<td>{{ $inquiry['mail'] }}</td>
-		</tr>
-		<tr>
-			<td>Stichwort: </td>
-			<td>{{ $inquiry['title'] }}</td>
-		</tr>
-		<tr>
-			<td>Produkt: </td>
-			<td>{{ $inquiry['product'] }}</td>
-		</tr>
-		<tr>
-			<td>Format: </td>
-			<td>{{ $inquiry['format'] }}</td>
-		</tr>
-		<tr>
-			<td>Seitenanzahl: </td>
-			<td>{{ $inquiry['pages'] }}</td>
-		</tr>
-		<tr>
-			<td>Ausrichtung: </td>
-			<td>{{ $inquiry['orientation'] }}</td>
-		</tr>
-		<tr>
-			<td>Druck: </td>
-			<td>{{ $inquiry['printing'] }}</td>
-		</tr>
-		<tr>
-			<td>Farbe: </td>
-			<td>{{ $inquiry['colors'] }}</td>
-		</tr>
-		<tr>
-			<td>Papier & Gewicht: </td>
-			<td>{{ $inquiry['material'] }}</td>
-		</tr>
-		<tr>
-			<td>Auflage: </td>
-			<td>{{ $inquiry['edition'] }}</td>
-		</tr>
-		<tr>
-			<td>Objektbeschreibung: </td>
-			<td>{{ $inquiry['description'] }}</td>
-		</tr>
-	</table>
-@show
+			@section('content')
+				Soeben wurde eine neue Bestellung auf notizbücher-shop.com aufgegeben:
+				
+				<table width="100%" cellpadding="0" cellspacing="0" border="0" class="devicewidth" hlitebg="edit" shadow="edit" style="font-family: Helvetica, Arial, sans-serif; font-size: 14px; line-height: 18px; padding: 20px 0;">
+					<tr>
+						<td width="30%" valign="top">Adresse: </td>
+						<td width="70%" valign="top">
+							<div>{{ $order['company'] }}</div>
+							<div>{{ $order['name'] }}</div>
+							<div>{{ $order['street'] }}</pbr>
+							<div>{{ $order['zip'] }} {{ $order['town'] }}</div>
+							<div>{{ $order['country'] }}</div>
+						</td>
+					</tr>
+					<tr><td colspan="2"><br></td></tr>
+					<tr>
+						<td width="30%" valign="top">Kontaktdaten:</td>
+						<td width="70%" valign="top">
+							<div>{{ $order['phone'] }}</div>
+							<div>{{ $order['email'] }}</div>
+						</td>
+					</tr>
+					<tr><td colspan="2"><br></td></tr>
+					<tr>
+						<td valign="top">Zahlungsart: </td>
+						<td valign="top">{{ $order['payment'] }}</td>
+					</tr>
+					<tr><td colspan="2"><br></td></tr>
+					<tr>
+						<td valign="top">Produkte: </td>
+						<td valign="top">
+							@foreach(json_decode($order['products']) as $product)
+								<strong>
+									{{ $product->cover->name }} - {{ $product->cover->variety }}
+								</strong>
 
-			</td>
-		</tr>
-		</tbody>
+								<ul style="padding: 0 0 0 16px; margin: 0;">
+									@foreach($product->option as $option)
+										<li>{{ $option->name }}</li>
+									@endforeach
+
+									<li>{{ $product->pattern->name }}</li>
+								</ul>
+
+								<div>Stückzahl: {{ $product->amount }}</div>
+								<div>Preis: {{ $product->total }} €</div>
+
+								<hr/>
+							@endforeach
+						</td>
+					</tr>
+					<tr><td colspan="2"><br></td></tr>
+					<tr>
+						<td valign="top">Gesamtbetrag: </td>
+						<td valign="top">{{ $order['sum'] }} €</td>
+					</tr>
+				</table>
+
+				@if($order['payment'] == 'prepayment')
+					<p style="padding: 10px; background: #ddd">
+						<strong>COMMERZBANK</strong><br>
+						<strong>Max Müller</strong><br>
+						IBAN: <strong>DE1234123412341234</strong><br>
+						BIC: <strong>23456789</strong><br>
+						Verwendungszweck: K12345<br>
+						<br>
+						<strong>Bitte überweisen Sie den obenstehenden Betrag in den kommenden 5 Werktagen.</strong>
+					<p>
+				@endif
+			@show
+
+		</td>
+	</tr>
+	</tbody>
 	</table>
 </div>
 

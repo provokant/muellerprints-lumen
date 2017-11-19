@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Log;
 use App\Order;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -24,34 +25,41 @@ class OrderController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'phone' => 'required',
-            'mail' => 'required|email',
-            'title' => 'required',
-            'format' => 'required',
-            'orientation' => 'required',
-            'product' => 'required',
-            'material' => 'required',
-            'pages' => 'required',
-            'printing' => 'required',
-            'colors' => 'required',
-            'edition' => 'required',
+            'street' => 'required',
+            'zip' => 'required',
+            'town' => 'required',
+            'country' => 'required',
+            'email' => 'required',
+            'company',
+            'phone',
+            'payment' => 'required',
+            'terms' => 'required',
+            'disclaimer' => 'required',
+            'products' => 'required',
+            'sum' => 'required'
         ]);
 
+        // Log::info($request);
+
         $mail = [
-            'inquiry' => new Inquiry($request->all()), 
+            'order' => new Order($request->all()), 
             'date' => Carbon::now()->formatLocalized('%d.%m.%Y um %H:%M Uhr')
         ];
 
+        Log::info($mail['order']['products']);
+
+        // dd($mail['order']['products']);
+
         Mail::send('mails.order.admin', $mail, function ($m) {
             $m->to(env('MAIL_TO'));
-            $m->subject('Bestellung auf notizbücher-shop.com');
+            $m->subject('Neue Bestellung auf notizbücher-shop.com');
         });
 
         Mail::send('mails.order.confirmation', $mail, function ($m) use ($mail) {
-            $m->to($mail['inquiry']['mail']);
+            $m->to($mail['order']['email']);
             $m->subject('Bestellbestätigung auf notizbücher-shop.com');
         });
 
-        return response($mail['inquiry'], 200);
+        return response($mail['order'], 200);
     }
 }
