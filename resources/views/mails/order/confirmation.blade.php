@@ -141,7 +141,7 @@
 										<li>{{ $option->name }}</li>
 									@endforeach
 
-									<li>{{ $product->pattern->name }}</li>
+									<li>{{ $product->pattern->name }} {{ $product->pattern->id }}</li>
 								</ul>
 
 								<div>Stückzahl: {{ $product->amount }}</div>
