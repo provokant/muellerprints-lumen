@@ -19,7 +19,8 @@ class Order extends Model {
     'terms',
     'disclaimer',
     'products',
-    'sum'
+    'sum',
+    'delivery'
   ];
 
   protected $hidden = [

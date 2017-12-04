@@ -92,7 +92,7 @@
 				
 				<table width="100%" cellpadding="0" cellspacing="0" border="0" class="devicewidth" hlitebg="edit" shadow="edit" style="font-family: Helvetica, Arial, sans-serif; font-size: 14px; line-height: 18px; padding: 20px 0;">
 					<tr>
-						<td width="30%" valign="top">Adresse: </td>
+						<td width="30%" valign="top">Rechnungsadresse: </td>
 						<td width="70%" valign="top">
 							<div>{{ $order['company'] }}</div>
 							<div>{{ $order['name'] }}</div>
@@ -102,6 +102,19 @@
 						</td>
 					</tr>
 					<tr><td colspan="2"><br></td></tr>
+					@if($order['delivery'])
+						<tr>
+							<td width="30%" valign="top">Lieferadresse: </td>
+							<td width="70%" valign="top">
+								<?php $delivery = json_decode($order['delivery']); ?>
+								<div>{{ $delivery->name }}</div>
+								<div>{{ $delivery->street }}</div>
+								<div>{{ $delivery->zip }} {{ $delivery->town }}</div>
+								<div>{{ $delivery->country }}</div>
+							</td>
+						</tr>
+						<tr><td colspan="2"><br></td></tr>
+					@endif
 					<tr>
 						<td width="30%" valign="top">Kontaktdaten:</td>
 						<td width="70%" valign="top">
