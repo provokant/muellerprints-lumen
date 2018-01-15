@@ -145,7 +145,7 @@
 								</ul>
 
 								<div>Stückzahl: {{ $product->amount }}</div>
-								<div>Preis: {{ $product->total }} €</div>
+								<div>Preis: {{ $product->total }}</div>
 
 								<hr/>
 							@endforeach
@@ -155,9 +155,9 @@
 					<tr>
 						<td valign="top">Gesamtbetrag: </td>
 						<td valign="top">
-							{{ $order['sum'] }} € 
+							{{ $order['sum'] }}
 							@if($order['shippingCost'] != "0")
-								zzgl. {{ $order['shippingCost'] }} € Versandkosten
+								zzgl. {{ $order['shippingCost'] }} Versandkosten
 							@endif
 						</td>
 					</tr>
