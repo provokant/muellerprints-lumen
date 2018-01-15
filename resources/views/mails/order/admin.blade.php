@@ -118,7 +118,9 @@
 					<tr>
 						<td width="30%" valign="top">Kontaktdaten:</td>
 						<td width="70%" valign="top">
-							<div>{{ $order['phone'] }}</div>
+							@if($order['phone'])
+								<div>{{ $order['phone'] }}</div>
+							@endif
 							<div>{{ $order['email'] }}</div>
 						</td>
 					</tr>
@@ -137,11 +139,11 @@
 								</strong>
 
 								<ul style="padding: 0 0 0 16px; margin: 0;">
-									@foreach($product->option as $option)
+									@foreach($product->options as $option)
 										<li>{{ $option->name }}</li>
 									@endforeach
 
-									<li>{{ $product->pattern->name }} {{ $product->pattern->id }}</li>
+									<li>{{ $product->pattern->id }}</li>
 								</ul>
 
 								<div>Stückzahl: {{ $product->amount }}</div>
@@ -154,7 +156,12 @@
 					<tr><td colspan="2"><br></td></tr>
 					<tr>
 						<td valign="top">Gesamtbetrag: </td>
-						<td valign="top">{{ $order['sum'] }} €</td>
+						<td valign="top">
+							{{ $order['sum'] }} € 
+							@if($order['shippingCost'] != "0")
+								zzgl. {{ $order['shippingCost'] }} € Versandkosten
+							@endif
+						</td>
 					</tr>
 				</table>
 			@show

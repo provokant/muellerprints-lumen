@@ -37,7 +37,8 @@ class OrderController extends Controller
             'disclaimer' => 'required',
             'products' => 'required',
             'sum' => 'required',
-            'delivery'
+            'delivery',
+	    'shippingCost'
         ]);
 
         // Log::info($request);
