@@ -20,3 +20,11 @@ $router->post('/', 'MailController@send');
 $router->post('/mail', 'MailController@send');
 
 $router->post('/order', 'OrderController@send');
+
+$router->post('/register', 'RegisterController@create');
+$router->post('/activate', 'RegisterController@activate');
+
+$router->post('/forgot-pw', 'ForgotPasswordController@send');
+$router->post('/forgot-pw', 'ForgotPasswordController@activate');
+
+$router->post('/login', ['middleware' => 'auth', 'LoginController@index']);
