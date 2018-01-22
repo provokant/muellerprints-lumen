@@ -95,7 +95,7 @@
         <p>Bitte bestätigen Sie Ihre Registrierung mit folgendem Link:</p>
 
         <p>
-          <a href="https://localhost:8000/user/{{ $activation }}">https://localhost:8000/user/activate/{{ $activation }}</a>
+          <a href="https://picasso.uber.space/user/activate/{{ $activation }}">https://picasso.uber.space/user/activate/{{ $activation }}</a>
         </p>
 				
 			@show
