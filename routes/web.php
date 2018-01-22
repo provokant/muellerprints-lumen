@@ -21,15 +21,6 @@ $router->post('/mail', 'MailController@send');
 
 $router->post('/order', 'OrderController@send');
 
-// $router->post('/register', 'RegisterController@create');
-// $router->post('/activate', 'RegisterController@activate');
-
-// $router->post('/forgot-pw', 'ForgotPasswordController@send');
-// $router->post('/forgot-pw', 'ForgotPasswordController@activate');
-
-// $router->post('/login', ['middleware' => 'auth', 'LoginController@index']);
-
-
 $router->get('user/activate/{code}', 'UserController@activate');
 $router->post('user/login', 'UserController@login');
 $router->post('user/register', 'UserController@register');
@@ -37,3 +28,21 @@ $router->post('user/info', [
     'middleware' => 'authToken',
     'uses' => 'UserController@info'
 ]);
+
+$router->get('users', function() {    
+    $users = [];
+    foreach(App\User::all() as $user) {
+        $user->orders = $user->orders;
+        array_push($users, $user);
+    }
+    return response($users);
+});
+
+$router->get('orders', function() {
+    $orders = [];
+    foreach(App\Order::all() as $order) {
+        $order->user = $order->user()->first();
+        array_push($orders, $order);
+    }
+    return response($orders);
+});

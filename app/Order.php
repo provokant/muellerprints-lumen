@@ -34,7 +34,7 @@ class Order extends Model {
    * @return App\User
    */
 
-  public function orders() {
+  public function user() {
     return $this->belongsTo('App\User');
   }
 }
