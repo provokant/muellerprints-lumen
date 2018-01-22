@@ -30,6 +30,10 @@ class CreateOrdersTable extends Migration
             $table->string('delivery')->nullable();
             $table->string('shippingCost');
 
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')
+                ->references('id')->on('users');
+
             $table->timestamps();
         });
     }

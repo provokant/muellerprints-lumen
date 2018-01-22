@@ -27,4 +27,14 @@ class Order extends Model {
   protected $hidden = [
 
   ];
+
+  /**
+   * Get corresponding User for the selected Order.
+   * 
+   * @return App\User
+   */
+
+  public function orders() {
+    return $this->belongsTo('App\User');
+  }
 }

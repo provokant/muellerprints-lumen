@@ -46,4 +46,14 @@ class User extends Model implements
     protected $hidden = [
 
     ];
+
+    /**
+     * Get all corresponding Orders for the selected User.
+     * 
+     * @return App\Order
+     */
+
+    public function orders() {
+        return $this->hasMany('App\Order');
+    }
 }
