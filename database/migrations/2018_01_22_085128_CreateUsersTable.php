@@ -17,9 +17,24 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('password');
             $table->string('email')->unique();
-            $table->string('api_token', 60)->unique();
+            $table->string('api_token', 60)->unique()->nullable();
             $table->boolean('activated')->nullable();
             $table->string('activation_code', 60)->unique();
+            $table->string('browser')->nullable();
+            $table->string('ip')->nullable();
+            $table->boolean('newsletter')->nullable();
+            $table->string('name')->nullable();
+            $table->string('street')->nullable();
+            $table->string('zip')->nullable();
+            $table->string('town')->nullable();
+            $table->string('country')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('company')->nullable();
+            $table->string('delivery_name')->nullable();
+            $table->string('delivery_street')->nullable();
+            $table->string('delivery_zip')->nullable();
+            $table->string('delivery_town')->nullable();
+            $table->string('delivery_country')->nullable();
             $table->timestamps();
         });
     }

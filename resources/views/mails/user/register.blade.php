@@ -95,8 +95,18 @@
         <p>Bitte bestätigen Sie Ihre Registrierung mit folgendem Link:</p>
 
         <p>
-          <a href="https://picasso.uber.space/user/activate/{{ $activation }}">https://picasso.uber.space/user/activate/{{ $activation }}</a>
+          <a href="https://picasso.uber.space/user/activate/{{ $activation }}">Konto aktivieren</a>
         </p>
+
+				<p>Oder öffnen Sie folgenden Link manuell in Ihrem gewünschten Browser:</p>
+
+				<p>
+					https://picasso.uber.space/user/activate/{{ $activation }}
+				</p>
+
+				<p>
+					<i>Der Link ist nur für 24 Stunden aktiv und das angelegte Konto wird gelöscht. Danach ist Ihre angegebene E-Mail-Adresse wieder verfügbar für eine Erneute Registrierung.</i>
+				</p>
 				
 			@show
 

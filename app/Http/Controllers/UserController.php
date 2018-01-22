@@ -37,7 +37,7 @@ class UserController extends Controller
 
             return $user->api_token;
         } else {
-            return response('Passwort oder E-Mail-Adresse nicht korrekt.', 401);
+            return response('Passwort oder E-Mail-Adresse sind nicht korrekt.', 401);
         }
     }
 
@@ -50,7 +50,7 @@ class UserController extends Controller
         $input = $request->all();
 
         if (User::where('email', '=', $input['email'])->first()) {
-            return response('Benutzer existiert bereits.', 500);
+            return response('E-Mail-Adresse bereits vergeben.', 400);
         }
 
         $activation = str_random(60);
@@ -72,19 +72,21 @@ class UserController extends Controller
             $m->subject('Ihre Registrierung auf notizbücher-shop.com');
         });
 
-        return response('Benutzer wurde erfolgreich registriert.', 200);
+        return response('Konto wurde erfolgreich registriert.', 200);
 
     }
 
     public function activate(Request $request, $code) {
-        $user = User::where('activated', '!=', true)->where('activation_code', '=', $code)->first();
+        $user = User::where('activated', '!=', true)
+            ->where('activation_code', '=', $code)->first();
+
         if ($user) {
             $user->activated = true;
             $user->activation_code = null;
             $user->save();
-            return response('Benutzer erfolgreich aktiviert.', 200);
+            return response('Konto erfolgreich aktiviert.', 200);
         } else {
-          return response('Benutzer wurde bereits registriert', 500);
+          return response('Konto wurde bereits aktiviert', 500);
         }
     }
 

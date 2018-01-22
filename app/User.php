@@ -17,12 +17,26 @@ class User extends Model implements
      * @var array
      */
     protected $fillable = [
-        'username', 
         'email', 
         'api_token',
+        'browser',
+        'ip',
         'activated',
         'activation_code',
         'password',
+        'newsletter',
+        'name',
+        'street',
+        'zip',
+        'town',
+        'country',
+        'phone',
+        'company',
+        'delivery_name',
+        'delivery_street',
+        'delivery_zip',
+        'delivery_town',
+        'delivery_country',
     ];
     /**
      * The attributes excluded from the model's JSON form.
@@ -30,6 +44,6 @@ class User extends Model implements
      * @var array
      */
     protected $hidden = [
-        
+
     ];
 }
