@@ -38,7 +38,7 @@ class OrderController extends Controller
             'products' => 'required',
             'sum' => 'required',
             'delivery',
-	    'shippingCost'
+	        'shippingCost'
         ]);
 
         // Log::info($request);

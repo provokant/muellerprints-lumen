@@ -21,10 +21,19 @@ $router->post('/mail', 'MailController@send');
 
 $router->post('/order', 'OrderController@send');
 
-$router->post('/register', 'RegisterController@create');
-$router->post('/activate', 'RegisterController@activate');
+// $router->post('/register', 'RegisterController@create');
+// $router->post('/activate', 'RegisterController@activate');
 
-$router->post('/forgot-pw', 'ForgotPasswordController@send');
-$router->post('/forgot-pw', 'ForgotPasswordController@activate');
+// $router->post('/forgot-pw', 'ForgotPasswordController@send');
+// $router->post('/forgot-pw', 'ForgotPasswordController@activate');
 
-$router->post('/login', ['middleware' => 'auth', 'LoginController@index']);
+// $router->post('/login', ['middleware' => 'auth', 'LoginController@index']);
+
+
+$router->get('user/activate/{code}', 'UserController@activate');
+$router->post('user/login', 'UserController@login');
+$router->post('user/register', 'UserController@register');
+$router->post('user/info', [
+    'middleware' => 'authToken',
+    'uses' => 'UserController@info'
+]);
