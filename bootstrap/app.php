@@ -48,6 +48,10 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+$app->singleton(Faker\Generator::class, function () {
+    return Faker\Factory::create('de_DE');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware

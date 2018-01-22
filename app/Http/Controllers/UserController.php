@@ -11,8 +11,6 @@ use Log;
 
 class UserController extends Controller
 {
-    private $salt;
-
     public function __construct()
     {
 
@@ -86,7 +84,7 @@ class UserController extends Controller
             $user->save();
             return response('Konto erfolgreich aktiviert.', 200);
         } else {
-          return response('Konto wurde bereits aktiviert', 500);
+          return response('Konto wurde bereits aktiviert.', 500);
         }
     }
 

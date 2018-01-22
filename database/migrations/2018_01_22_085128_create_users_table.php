@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('api_token', 60)->unique()->nullable();
             $table->boolean('activated')->nullable();
-            $table->string('activation_code', 60)->unique();
+            $table->string('activation_code', 60)->unique()->nullable();
             $table->string('browser')->nullable();
             $table->string('ip')->nullable();
             $table->boolean('newsletter')->nullable();
