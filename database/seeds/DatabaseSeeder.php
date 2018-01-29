@@ -15,3 +15,30 @@ class DatabaseSeeder extends Seeder
         $this->call('UsersTableSeeder');
     }
 }
+
+class OrdersTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        factory('App\Order', 100)->create();
+    }
+}
+
+class UsersTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        factory('App\User', 20)->create();
+    }
+}
+
