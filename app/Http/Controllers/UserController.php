@@ -91,4 +91,30 @@ class UserController extends Controller
     public function info() {
         return Auth::user()->load('orders');
     }
+
+    public function updatePassword(Request $request) {
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required',
+            'confirmation' => 'required',
+        ]);
+
+        return Auth::user()->load('orders');
+    }
+
+    public function updateEmail(Request $request) {
+        $this->validate($request, [
+            'email' => 'required|email',
+            'confirmation' => 'required',
+            'password' => 'required',
+        ]);
+
+        return Auth::user()->load('orders');
+    }
+
+    public function updateInfo(Request $request) {
+        
+        return Auth::user()->load('orders');
+    }
+
 }

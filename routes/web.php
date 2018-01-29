@@ -28,6 +28,18 @@ $router->post('user/info', [
     'middleware' => 'authToken',
     'uses' => 'UserController@info'
 ]);
+$router->post('user/update/email', [
+    'middleware' => 'authToken',
+    'uses' => 'UserController@updateEmail'
+]);
+$router->post('user/update/password', [
+    'middleware' => 'authToken',
+    'uses' => 'UserController@updatePassword'
+]);
+$router->post('user/update/info', [
+    'middleware' => 'authToken',
+    'uses' => 'UserController@updateInfo'
+]);
 
 /*
  |--------------------------------------------------------------------------
