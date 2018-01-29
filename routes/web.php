@@ -29,20 +29,24 @@ $router->post('user/info', [
     'uses' => 'UserController@info'
 ]);
 
-$router->get('users', function() {    
-    $users = [];
-    foreach(App\User::all() as $user) {
-        $user->orders = $user->orders;
-        array_push($users, $user);
-    }
-    return response($users);
-});
+/*
+ |--------------------------------------------------------------------------
+ | Development section
+ |--------------------------------------------------------------------------
+ |
+ | These routes should only be available in development mode. Sensible data
+ | is provided and must be hidden in production mode.
+ | To change these settings, go to .env and set APP_ENV=production|local
+ |
+ */
+if (env('APP_ENV') === 'local') {
+    $router->get('users', function() {    
+        return response(App\User::all()->load('orders'));
+    });
+    
+    $router->get('orders', function() {
+        return response(App\Order::all()->load('user'));
+    });
+}
 
-$router->get('orders', function() {
-    $orders = [];
-    foreach(App\Order::all() as $order) {
-        $order->user = $order->user()->first();
-        array_push($orders, $order);
-    }
-    return response($orders);
-});
+

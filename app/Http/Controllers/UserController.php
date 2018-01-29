@@ -89,6 +89,6 @@ class UserController extends Controller
     }
 
     public function info() {
-        return Auth::user();
+        return Auth::user()->load('orders');
     }
 }
