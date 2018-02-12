@@ -9,7 +9,7 @@ class UserTest extends TestCase
     use DatabaseMigrations;
 
     /**
-     * Check user authentication
+     * Check user authentication.
      *
      * @return void
      */
@@ -21,7 +21,7 @@ class UserTest extends TestCase
     }
 
     /**
-     * Check user login
+     * Check user login.
      *
      * @return void
      */
@@ -35,5 +35,29 @@ class UserTest extends TestCase
         ]);
 
         $this->assertEquals(200, $response->status());
+    }
+
+    /**
+     * Get Auth Token after login and open user infos.
+     *
+     * @return void
+     */
+    public function testAuthToken()
+    {
+        $user = factory('App\User')->create();
+
+        $loginResponse = $this->call('POST', 'user/login', [
+            'email' => $user->email,
+            'password' => 1234567890 // default password for mock users
+        ]);
+
+        $token = $loginResponse->original;
+
+        $infoResponse = $this->json('POST', 'user/info', [
+            'api_token' => $token
+        ])->seeJson([
+            'email' => $user->email,
+            'name' => $user->name
+        ]);
     }
 }
