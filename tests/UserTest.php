@@ -2,6 +2,8 @@
 
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
+use Illuminate\Hashing\BcryptHasher;
+use App\User;
 
 class UserTest extends TestCase
 {
@@ -13,7 +15,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testAuthentication()
+    public function testAuth()
     {
         $user = factory('App\User')->make();
 
@@ -35,7 +37,7 @@ class UserTest extends TestCase
     }
 
     /**
-     * Get Auth Token after Login and match User Infos.
+     * Login and match User Infos.
      *
      * @return void
      */
@@ -54,6 +56,72 @@ class UserTest extends TestCase
     }
 
     /**
+     * Fail changing User Password for missmatched old Password.
+     *
+     * @return void
+     */
+    public function testFailPasswordUpdateForOldPassword()
+    {
+        $user = factory('App\User')->create();
+
+        $newPassword = '0987654321';
+
+        $response = $this->actingAs($user)->call('POST', 'user/update/password', [
+            'old' => '10293847576',
+            'new' => $newPassword,
+            'confirmation' => $newPassword
+        ]);
+
+        $this->assertEquals(500, $response->status());
+
+        $this->assertFalse((new BcryptHasher)->check($newPassword, User::findOrFail($user->id)->password));
+    }
+
+    /**
+     * Fail changing User Password for missmatched new Passwords.
+     *
+     * @return void
+     */
+    public function testFailPasswordUpdateForNewPasswords()
+    {
+        $user = factory('App\User')->create();
+
+        $oldPassword = '1234567890';
+
+        $response = $this->actingAs($user)->call('POST', 'user/update/password', [
+            'old' => $oldPassword,
+            'new' => '1029384756',
+            'confirmation' => '0987654321'
+        ]);
+
+        $this->assertEquals(500, $response->status());
+
+        $this->assertTrue((new BcryptHasher)->check($oldPassword, User::findOrFail($user->id)->password));
+    }
+
+    /**
+     * Succeed changing User Password.
+     *
+     * @return void
+     */
+    public function testPasswordUpdate()
+    {
+        $user = factory('App\User')->create();
+
+        $newPassword = '0987654321';
+
+        $response = $this->actingAs($user)->call('POST', 'user/update/password', [
+            'old' => '1234567890',
+            'new' => $newPassword,
+            'confirmation' => $newPassword
+        ]);
+
+        $this->assertEquals(200, $response->status());
+
+        $this->assertTrue((new BcryptHasher)->check($newPassword, User::findOrFail($user->id)->password));
+    }
+
+    /**
      * Login User and get Response from Login Page.
      * 
      * @return Response
@@ -62,7 +130,8 @@ class UserTest extends TestCase
     private function userLogin($user) {
         return $this->call('POST', 'user/login', [
             'email' => $user->email,
-            'password' => 1234567890 // default password for mock users
+            // Default Password for Mock Users
+            'password' => '1234567890' 
         ]);
     }
 }

@@ -94,12 +94,27 @@ class UserController extends Controller
 
     public function updatePassword(Request $request) {
         $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required',
+            'old' => 'required',
+            'new' => 'required',
             'confirmation' => 'required',
         ]);
 
-        return Auth::user()->load('orders');
+        $input = $request->all();
+
+        $user = Auth::user();
+
+        if (!(new BcryptHasher)->check($input['old'], $user->password)) {
+            return response('Das aktuelle Passwort war nicht korrekt.', 500);
+        }
+
+        if ($input['new'] != $input['confirmation']) {
+            return response('Neues Passwort wurde nicht korrekt bestätigt.', 500);
+        }
+
+        $user->password = (new BcryptHasher)->make($input['new']);
+        $user->save();
+
+        return response('Passwort wurde erfolgreich geändert.', 200);
     }
 
     public function updateEmail(Request $request) {
