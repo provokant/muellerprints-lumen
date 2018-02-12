@@ -41,6 +41,8 @@ $router->post('user/update/info', [
     'uses' => 'UserController@updateInfo'
 ]);
 
+$router->post('payment/prepare', 'PaymentController@prepare');
+
 /*
  |--------------------------------------------------------------------------
  | Development section
