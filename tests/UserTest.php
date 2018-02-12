@@ -120,7 +120,7 @@ class UserTest extends TestCase
 
         $this->assertTrue((new BcryptHasher)->check($newPassword, User::findOrFail($user->id)->password));
     }
-
+    
     /**
      * Fail updating User Info.
      *
@@ -185,7 +185,7 @@ class UserTest extends TestCase
      * Succeed updating User Email.
      *
      * @return void
-     */
+    */
     public function testEmailUpdate()
     {
         $user = factory('App\User')->create();
