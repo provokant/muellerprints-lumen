@@ -168,6 +168,46 @@ class UserTest extends TestCase
     }
 
     /**
+     * Fail updating User Email.
+     *
+     * @return void
+     */
+    public function testFailEmailUpdate()
+    {
+        $user = factory('App\User')->create();
+
+        $response = $this->actingAs($user)->call('POST', 'user/update/email');
+
+        $this->assertEquals(422, $response->status());
+    }
+
+    /**
+     * Succeed updating User Email.
+     *
+     * @return void
+     */
+    public function testEmailUpdate()
+    {
+        $user = factory('App\User')->create();
+        $new = factory('App\User')->make()->email;
+        $old = $user->email;
+
+        $response = $this->actingAs($user)->call('POST', 'user/update/email', [
+            'old' => $old,
+            'new' => $new,
+            'new_confirmation' => $new,
+            'password' => '1234567890'
+        ]);
+        // Updated User Information
+        $updated = User::findOrFail($user->id);
+        // Successful update
+        $this->assertEquals(200, $response->status());
+        // Double-check changed attributes
+        $this->assertTrue($old != $updated->email);
+        $this->assertEquals($updated->email, $new);
+    }
+
+    /**
      * Login User and get Response from Login Page.
      * 
      * @return Response

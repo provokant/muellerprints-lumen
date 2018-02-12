@@ -99,36 +99,48 @@ class UserController extends Controller
         ]);
 
         $input = $request->all();
-
         $user = Auth::user();
 
         if (!(new BcryptHasher)->check($input['old'], $user->password)) {
             return response('Das aktuelle Passwort war nicht korrekt.', 500);
         }
 
-        $user->password = (new BcryptHasher)->make($input['new']);
-        $user->save();
+        try {
+            $user->password = (new BcryptHasher)->make($input['new']);
+            $user->save();
 
-        return response('Passwort wurde erfolgreich geändert.', 200);
+            return response('Passwort wurde erfolgreich geändert.', 200);
+        } catch (Exception $e) {
+            return response('Daten konnten nicht gespeichert werden. Bitte erneut versuchen.', 500);
+        }
     }
 
     public function updateEmail(Request $request) {
         $this->validate($request, [
-            'old' => 'required|email',
-            'new' => 'confirmed',
+            'old' => 'required',
+            'new' => 'confirmed|email',
             'password' => 'required'
         ]);
 
         $user = Auth::user();
+        $input = $request->all();
+
+        if ($input['old'] != $user->email) {
+            return response('Die aktuelle E-Mail war nicht korrekt.', 500);
+        }
 
         if (!(new BcryptHasher)->check($input['password'], $user->password)) {
             return response('Das aktuelle Passwort war nicht korrekt.', 500);
         }
 
-        $input = $request->all();
+        try {
+            $user->email = $input['new'];
+            $user->save();
 
-        // return Auth::user()->update($input);
-        return response('Top', 200);
+            return response('E-Mail wurde erfolgreich geändert.', 200);
+        } catch (Exception $e) {
+            return response('Daten konnten nicht gespeichert werden. Bitte erneut versuchen.', 500);
+        }
     }
 
     public function updateInfo(Request $request) {
