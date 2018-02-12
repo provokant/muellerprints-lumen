@@ -25,6 +25,7 @@ class User extends Model implements
         'activation_code',
         'password',
         'newsletter',
+        'salutation',
         'name',
         'street',
         'zip',

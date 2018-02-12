@@ -17,10 +17,22 @@ use Illuminate\Hashing\BcryptHasher;
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
+        'name' => $faker->firstName . ' ' . $faker->lastName,
         'email' => $faker->unique()->safeEmail,
         'activated' => true,
-        'password'=> (new BcryptHasher)->make('1234567890')
+        'password'=> (new BcryptHasher)->make('1234567890'),
+        'salutation' => $faker->title,
+        'street' => $faker->streetAddress,
+        'zip' => $faker->postcode,
+        'town' => $faker->city,
+        'country' => $faker->country,
+        'phone' => $faker->e164PhoneNumber,
+        'company' => $faker->company,
+        'delivery_name' => $faker->firstName . ' ' . $faker->lastName,
+        'delivery_street' => $faker->streetAddress,
+        'delivery_zip' => $faker->postcode,
+        'delivery_town' => $faker->city,
+        'delivery_country' => $faker->country,
     ];
 });
 
@@ -29,7 +41,9 @@ $factory->define(App\Order::class, function (Faker\Generator $faker) {
     $shippingCost = $faker->randomNumber(3) . ' €';
     
     return [
-        'name' => $faker->name,
+        'salutation' => $faker->title,
+        'name' => $faker->firstName . ' ' . $faker->lastName,
+        'street' => $faker->streetAddress,
         'zip' => $faker->postcode,
         'town' => $faker->city,
         'country' => $faker->country,

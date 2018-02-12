@@ -23,11 +23,12 @@ class CreateUsersTable extends Migration
             $table->string('browser')->nullable();
             $table->string('ip')->nullable();
             $table->boolean('newsletter')->nullable();
-            $table->string('name')->nullable();
-            $table->string('street')->nullable();
-            $table->integer('zip')->nullable();
-            $table->string('town')->nullable();
-            $table->string('country')->nullable();
+            $table->string('salutation');
+            $table->string('name');
+            $table->string('street');
+            $table->integer('zip');
+            $table->string('town');
+            $table->string('country');
             $table->string('phone')->nullable();
             $table->string('company')->nullable();
             $table->string('delivery_name')->nullable();

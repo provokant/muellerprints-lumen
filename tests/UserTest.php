@@ -69,7 +69,7 @@ class UserTest extends TestCase
         $response = $this->actingAs($user)->call('POST', 'user/update/password', [
             'old' => '10293847576',
             'new' => $newPassword,
-            'confirmation' => $newPassword
+            'new_confirmation' => $newPassword
         ]);
 
         $this->assertEquals(500, $response->status());
@@ -91,16 +91,16 @@ class UserTest extends TestCase
         $response = $this->actingAs($user)->call('POST', 'user/update/password', [
             'old' => $oldPassword,
             'new' => '1029384756',
-            'confirmation' => '0987654321'
+            'new_confirmation' => '0987654321'
         ]);
 
-        $this->assertEquals(500, $response->status());
+        $this->assertEquals(422, $response->status());
 
         $this->assertTrue((new BcryptHasher)->check($oldPassword, User::findOrFail($user->id)->password));
     }
 
     /**
-     * Succeed changing User Password.
+     * Succeed updating User Password.
      *
      * @return void
      */
@@ -113,12 +113,58 @@ class UserTest extends TestCase
         $response = $this->actingAs($user)->call('POST', 'user/update/password', [
             'old' => '1234567890',
             'new' => $newPassword,
-            'confirmation' => $newPassword
+            'new_confirmation' => $newPassword
         ]);
 
         $this->assertEquals(200, $response->status());
 
         $this->assertTrue((new BcryptHasher)->check($newPassword, User::findOrFail($user->id)->password));
+    }
+
+    /**
+     * Fail updating User Info.
+     *
+     * @return void
+     */
+    public function testFailInfoUpdate()
+    {
+        $user = factory('App\User')->create();
+
+        $response = $this->actingAs($user)->call('POST', 'user/update/info');
+
+        $this->assertEquals(422, $response->status());
+    }
+
+    /**
+     * Succeed updating User Info.
+     *
+     * @return void
+     */
+    public function testInfoUpdate()
+    {
+        $user = factory('App\User')->create();
+        $new = factory('App\User')->create();
+
+        $response = $this->actingAs($user)->call('POST', 'user/update/info', [
+            'salutation' => $user->salutation,
+            'name' => $user->name,
+            'street' => $new->street,
+            'zip' => $new->zip,
+            'town' => $new->town,
+            'country' => $new->country,
+        ]);
+        // Updated User Information
+        $updated = User::findOrFail($user->id);
+
+        $this->assertEquals(200, $response->status());
+        // Unchanged attributes
+        $this->assertEquals($user->name, $updated->name);
+        $this->assertEquals($user->salutation, $updated->salutation);
+        // Changed attributes
+        $this->assertEquals($new->street, $updated->street);
+        $this->assertEquals($new->zip, $updated->zip);
+        $this->assertEquals($new->town, $updated->town);
+        $this->assertEquals($new->country, $updated->country);
     }
 
     /**

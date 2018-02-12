@@ -95,8 +95,7 @@ class UserController extends Controller
     public function updatePassword(Request $request) {
         $this->validate($request, [
             'old' => 'required',
-            'new' => 'required',
-            'confirmation' => 'required',
+            'new' => 'confirmed'
         ]);
 
         $input = $request->all();
@@ -107,10 +106,6 @@ class UserController extends Controller
             return response('Das aktuelle Passwort war nicht korrekt.', 500);
         }
 
-        if ($input['new'] != $input['confirmation']) {
-            return response('Neues Passwort wurde nicht korrekt bestätigt.', 500);
-        }
-
         $user->password = (new BcryptHasher)->make($input['new']);
         $user->save();
 
@@ -119,24 +114,45 @@ class UserController extends Controller
 
     public function updateEmail(Request $request) {
         $this->validate($request, [
-            'email' => 'required|email',
-            'confirmation' => 'required',
-            'password' => 'required',
+            'old' => 'required|email',
+            'new' => 'confirmed',
+            'password' => 'required'
         ]);
 
-        return Auth::user()->load('orders');
+        $user = Auth::user();
+
+        if (!(new BcryptHasher)->check($input['password'], $user->password)) {
+            return response('Das aktuelle Passwort war nicht korrekt.', 500);
+        }
+
+        $input = $request->all();
+
+        // return Auth::user()->update($input);
+        return response('Top', 200);
     }
 
     public function updateInfo(Request $request) {
+
         $this->validate($request, [
+            'salutation' => 'required',
             'name' => 'required',
-            // 'zip' => 'required',
-            // 'town' => 'required',
-            // 'country' => 'required'
+            'street' => 'required',
+            'zip' => 'required',
+            'town' => 'required',
+            'country' => 'required',
+            'phone',
+            'company',
+            'delivery_name',
+            'delivery_street',
+            'delivery_zip',
+            'delivery_town',
+            'delivery_country'
         ]);
 
-        dd(Auth::user());
-
-        return Auth::user()->update($request->all());
+        try {
+            Auth::user()->update($request->all());
+        } catch (Exception $e) {
+            return response('Daten konnten nicht gespeichert werden. Bitte erneut versuchen.', 500);
+        }
     }
 }
