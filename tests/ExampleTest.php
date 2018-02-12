@@ -5,6 +5,9 @@ use Laravel\Lumen\Testing\DatabaseTransactions;
 
 class ExampleTest extends TestCase
 {
+    
+    use DatabaseMigrations;
+
     /**
      * A basic test example.
      *
@@ -12,10 +15,8 @@ class ExampleTest extends TestCase
      */
     public function testExample()
     {
-        $this->get('/');
+        $response = $this->call('GET', '/');
 
-        $this->assertEquals(
-            $this->app->version(), $this->response->getContent()
-        );
+        $this->assertEquals(200, $response->status());
     }
 }

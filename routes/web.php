@@ -51,7 +51,7 @@ $router->post('user/update/info', [
  | To change these settings, go to .env and set APP_ENV=production|local
  |
  */
-if (env('APP_ENV') === 'local') {
+if (env('APP_ENV') !== 'production') {
     $router->get('users', function() {    
         return response(App\User::all()->load('orders'));
     });

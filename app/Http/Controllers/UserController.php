@@ -113,8 +113,15 @@ class UserController extends Controller
     }
 
     public function updateInfo(Request $request) {
-        
-        return Auth::user()->load('orders');
-    }
+        $this->validate($request, [
+            'name' => 'required',
+            // 'zip' => 'required',
+            // 'town' => 'required',
+            // 'country' => 'required'
+        ]);
 
+        dd(Auth::user());
+
+        return Auth::user()->update($request->all());
+    }
 }
