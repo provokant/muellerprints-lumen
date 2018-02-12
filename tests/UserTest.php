@@ -29,16 +29,13 @@ class UserTest extends TestCase
     {
         $user = factory('App\User')->create();
 
-        $response = $this->call('POST', 'user/login', [
-            'email' => $user->email,
-            'password' => 1234567890 // default password for mock users
-        ]);
+        $response = $this->userLogin($user);
 
         $this->assertEquals(200, $response->status());
     }
 
     /**
-     * Get Auth Token after login and open user infos.
+     * Get Auth Token after Login and match User Infos.
      *
      * @return void
      */
@@ -46,18 +43,26 @@ class UserTest extends TestCase
     {
         $user = factory('App\User')->create();
 
-        $loginResponse = $this->call('POST', 'user/login', [
-            'email' => $user->email,
-            'password' => 1234567890 // default password for mock users
-        ]);
+        $token = $this->userLogin($user)->original;
 
-        $token = $loginResponse->original;
-
-        $infoResponse = $this->json('POST', 'user/info', [
+        $this->json('POST', 'user/info', [
             'api_token' => $token
         ])->seeJson([
             'email' => $user->email,
             'name' => $user->name
+        ]);
+    }
+
+    /**
+     * Login User and get Response from Login Page.
+     * 
+     * @return Response
+     */
+
+    private function userLogin($user) {
+        return $this->call('POST', 'user/login', [
+            'email' => $user->email,
+            'password' => 1234567890 // default password for mock users
         ]);
     }
 }
