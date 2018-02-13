@@ -8,19 +8,25 @@ class Payment extends Model {
 
   protected $fillable = [
     'amount',
-    'type',
+    'type'
   ];
 
   protected $hidden = [
-
+    'checkoutId'
   ];
 
-  static function connection() {
+  public function requestData() {
     return [
-      'user' => env('VRPAY_USER'),
-      'password' => env('VRPAY_PASSWORD'),
-      'key' => env('VRPAY_KEY'),
-      'host' => env('VRPAY_HOST')
+      'amount' => $this->amount,
+      'paymentType' => $this->type,
+      'currency' => env('VRPAY_CURRENCY'),
+      'authentication.userId' => env('VRPAY_USER'),
+      'authentication.password' => env('VRPAY_PASSWORD'),
+      'authentication.entityId' => env('VRPAY_KEY')
     ];
+  }
+
+  public function requestUrl() {
+    return (env('APP_ENV') === 'production' ? env('VRPAY_HOST') : env('VRPAY_TEST'));
   }
 }

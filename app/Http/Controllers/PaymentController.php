@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
-use App\User;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+// use Carbon\Carbon;
+// use App\User;
 use App\Payment;
-use Auth;
-use Log;
+// use Auth;
+// use Log;
 
 class PaymentController extends Controller
 {
@@ -22,6 +24,16 @@ class PaymentController extends Controller
 
         $payment = new Payment($request->all());
 
-        return response()->json($payment, 200);
+        try {
+            $response = (new Client())->request('POST', $payment->requestUrl(), [
+                'form_params' => $payment->requestData()
+            ]);
+        } catch(RequestException $e) {
+            return response('Internal Server Error.', 500);
+        } 
+
+        $body = json_decode((string) $response->getBody());
+
+        return response()->json($body, 200);
     }
 }
