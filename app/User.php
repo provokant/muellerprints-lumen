@@ -20,7 +20,7 @@ class User extends Model implements
         'email', 
         'api_token',
         'browser',
-        'ip',
+        'ip',   
         'activated',
         'activation_code',
         'password',

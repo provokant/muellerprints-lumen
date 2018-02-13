@@ -42,6 +42,7 @@ $router->post('user/update/info', [
 ]);
 
 $router->post('payment/prepare', 'PaymentController@prepare');
+$router->post('payment/status', 'PaymentController@status');
 
 /*
  |--------------------------------------------------------------------------

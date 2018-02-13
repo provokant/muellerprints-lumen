@@ -52,4 +52,26 @@ class PaymentTest extends TestCase
       $response->status()
     );
   }
+
+  /**
+   * Succeed checking for pending Payment.
+   *
+   * @return void
+   */
+  public function testStatus()
+  {
+    $prepareResponse = $this->call('POST', 'payment/prepare', [
+      'amount' => '42.00',
+      'type' => 'DB'
+    ]);
+
+    $statusResponse = $this->call('POST', 'payment/status', [
+      'id' => $prepareResponse->original->id
+    ]);
+
+    $this->assertEquals(
+      'transaction pending', 
+      $statusResponse->original->result->description
+    );
+  }
 }

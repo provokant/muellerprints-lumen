@@ -11,11 +11,9 @@ class Payment extends Model {
     'type'
   ];
 
-  protected $hidden = [
-    'checkoutId'
-  ];
+  protected $hidden = [];
 
-  public function requestData() {
+  public function prepareConnection() {
     return [
       'amount' => $this->amount,
       'paymentType' => $this->type,
@@ -26,7 +24,15 @@ class Payment extends Model {
     ];
   }
 
-  public function requestUrl() {
+  public function statusConnection() {
+    return [
+      'authentication.userId' => env('VRPAY_USER'),
+      'authentication.password' => env('VRPAY_PASSWORD'),
+      'authentication.entityId' => env('VRPAY_KEY')
+    ];
+  }
+
+  public function url() {
     return (env('APP_ENV') === 'production' ? env('VRPAY_HOST') : env('VRPAY_TEST'));
   }
 }
