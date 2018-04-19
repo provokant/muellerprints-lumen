@@ -27,6 +27,10 @@ class UserController extends Controller
         $user = User::where('email', $input['email'])
             ->where('activated', true)
             ->first();
+
+        if (empty($user)) {
+            return response('Passwort oder E-Mail-Adresse sind nicht korrekt.', 401);
+        }
       
         if ((new BcryptHasher)->check($input['password'], $user->password)) {
             $token = str_random(60);
