@@ -100,19 +100,30 @@ class UserController extends Controller
 
     public function updatePassword(Request $request) {
         $this->validate($request, [
-            'old' => 'required',
-            'new' => 'confirmed'
+            'data' => [
+                'password_old' => 'required',
+                'password_new' => 'required',
+                'password_new_confirmation' => 'required'
+            ]
         ]);
 
-        $input = $request->all();
         $user = Auth::user();
+        $input = json_decode((string) $request->all()['data']);
 
-        if (!(new BcryptHasher)->check($input['old'], $user->password)) {
-            return response('Das aktuelle Passwort war nicht korrekt.', 500);
+        if (!(new BcryptHasher)->check($input->password_old, $user->password)) {
+            return response('Das aktuelle Passwort ist nicht korrekt.', 500);
+        }
+
+        if ($input->password_new != $input->password_new_confirmation) {
+            return response('Die neuen Passwörter stimmen nicht übrerein.', 401);
+        }
+
+        if ((new BcryptHasher)->check($input->password_new, $user->password)) {
+            return response('Das neue Passwort unterscheidet sich nicht von der alten.', 401);
         }
 
         try {
-            $user->password = (new BcryptHasher)->make($input['new']);
+            $user->password = (new BcryptHasher)->make($input->password_new);
             $user->save();
 
             return response('Passwort wurde erfolgreich geändert.', 200);
