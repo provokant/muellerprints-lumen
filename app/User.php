@@ -23,7 +23,6 @@ class User extends Model implements
         'ip',   
         'activated',
         'activation_code',
-        'password',
         'newsletter',
         'salutation',
         'name',
@@ -38,6 +37,7 @@ class User extends Model implements
         'delivery_zip',
         'delivery_town',
         'delivery_country',
+        'password',
     ];
     /**
      * The attributes excluded from the model's JSON form.
@@ -45,7 +45,6 @@ class User extends Model implements
      * @var array
      */
     protected $hidden = [
-
     ];
 
     /**

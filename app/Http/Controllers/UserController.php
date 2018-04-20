@@ -93,6 +93,8 @@ class UserController extends Controller
     }
 
     public function info() {
+        // @todo Update Token and send to Frontend
+
         return Auth::user()->load('orders');
     }
 
@@ -121,24 +123,35 @@ class UserController extends Controller
 
     public function updateEmail(Request $request) {
         $this->validate($request, [
-            'old' => 'required',
-            'new' => 'confirmed|email',
-            'password' => 'required'
+            'data' => [
+                'email_old' => 'required',
+                'email_new' => 'required',
+                'email_new_confirmation' => 'required',
+                'password' => 'required'
+            ]
         ]);
 
         $user = Auth::user();
-        $input = $request->all();
+        $input = json_decode((string) $request->all()['data']);
 
-        if ($input['old'] != $user->email) {
-            return response('Die aktuelle E-Mail war nicht korrekt.', 500);
+        if ($input->email_old != $user->email) {
+            return response('Die aktuelle E-Mail ist nicht korrekt.', 401);
         }
 
-        if (!(new BcryptHasher)->check($input['password'], $user->password)) {
-            return response('Das aktuelle Passwort war nicht korrekt.', 500);
+        if ($input->email_new != $input->email_new_confirmation) {
+            return response('Die neuen E-Mails stimmen nicht übrerein.', 401);
+        }
+
+        if ($input->email_new == $user->email) {
+            return response('Die neue E-Mail unterscheidet sich nicht von der alten.', 401);
+        }
+
+        if (!(new BcryptHasher)->check($input->password, $user->password)) {
+            return response('Das aktuelle Passwort war nicht korrekt.', 401);
         }
 
         try {
-            $user->email = $input['new'];
+            $user->email = $input->email_new;
             $user->save();
 
             return response('E-Mail wurde erfolgreich geändert.', 200);
