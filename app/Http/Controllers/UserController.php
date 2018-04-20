@@ -15,34 +15,9 @@ class UserController extends Controller
     {
 
     }
-
-    public function login(Request $request){
-        $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        $input = $request->all();
-
-        $user = User::where('email', $input['email'])
-            ->where('activated', true)
-            ->first();
-
-        if (empty($user)) {
-            return response('Passwort oder E-Mail-Adresse sind nicht korrekt.', 401);
-        }
-      
-        if ((new BcryptHasher)->check($input['password'], $user->password)) {
-            $token = str_random(60);
-            $user->api_token = $token;
-            $user->save();
-
-            return $user->api_token;
-        } else {
-            return response('Passwort oder E-Mail-Adresse sind nicht korrekt.', 401);
-        }
-    }
-
+    /**
+     * Register new User
+     */
     public function register(Request $request){
         $this->validate($request, [
             'email' => 'required|email',
@@ -78,6 +53,10 @@ class UserController extends Controller
 
     }
 
+    /**
+     * Activate registered new User
+     */
+
     public function activate(Request $request, $code) {
         $user = User::where('activated', '!=', true)
             ->where('activation_code', '=', $code)->first();
@@ -92,12 +71,63 @@ class UserController extends Controller
         }
     }
 
-    public function info() {
-        // @todo Update Token and send to Frontend
+    /**
+     * Login User
+     */
 
+    public function login(Request $request){
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $input = $request->all();
+
+        $user = User::where('email', $input['email'])
+            ->where('activated', true)
+            ->first();
+
+        if (empty($user)) {
+            return response('Passwort oder E-Mail-Adresse sind nicht korrekt.', 401);
+        }
+      
+        if ((new BcryptHasher)->check($input['password'], $user->password)) {
+            $token = str_random(60);
+            $user->api_token = $token;
+            $user->save();
+
+            return $user->api_token;
+        } else {
+            return response('Passwort oder E-Mail-Adresse sind nicht korrekt.', 401);
+        }
+    }
+
+    /**
+     * Recieve full User Information including Orders 
+     * @todo Update Token and send to Frontend
+     */
+    public function info() {
         return Auth::user()->load('orders');
     }
 
+    /**
+     * Validate User Authentication and update Token
+     */
+    public function auth() {
+        return null;
+    }
+
+    /**
+     * Get all User Orders
+     */
+    public function orders() {
+        return Auth::user()->orders();
+    }
+
+
+    /**
+     * Update User Password
+     */
     public function updatePassword(Request $request) {
         $this->validate($request, [
             'data' => [
@@ -132,6 +162,9 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Update User Email
+     */
     public function updateEmail(Request $request) {
         $this->validate($request, [
             'data' => [
@@ -171,26 +204,51 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Update User Information
+     */
     public function updateInfo(Request $request) {
 
         $this->validate($request, [
-            'salutation' => 'required',
-            'name' => 'required',
-            'street' => 'required',
-            'zip' => 'required',
-            'town' => 'required',
-            'country' => 'required',
-            'phone',
-            'company',
-            'delivery_name',
-            'delivery_street',
-            'delivery_zip',
-            'delivery_town',
-            'delivery_country'
+            'data' => [
+                'salutation' => 'required',
+                'name' => 'required',
+                'street' => 'required',
+                'zip' => 'required',
+                'town' => 'required',
+                'country' => 'required',
+                'phone' => '',
+                'company' => '',
+                'delivery_salutation' => '',
+                'delivery_name' => '',
+                'delivery_street' => '',
+                'delivery_zip' => '',
+                'delivery_town' => '',
+                'delivery_country' => ''
+            ]
         ]);
 
+        $user = Auth::user();
+        $input = json_decode((string) $request->all()['data']);
+
         try {
-            Auth::user()->update($request->all());
+            $user->salutation = $input->salutation;
+            $user->name = $input->name;
+            $user->street = $input->street;
+            $user->zip = $input->zip;
+            $user->town = $input->town;
+            $user->country = $input->country;
+            $user->phone = $input->phone;
+            $user->company = $input->company;
+            $user->delivery_salutation = $input->delivery_salutation;
+            $user->delivery_name = $input->delivery_name;
+            $user->delivery_street = $input->delivery_street;
+            $user->delivery_zip = $input->delivery_zip;
+            $user->delivery_town = $input->delivery_town;
+            $user->delivery_country = $input->delivery_country;
+            $user->save();
+
+            return response('Adressdaten wurden erfolgreich geändert.', 200);
         } catch (Exception $e) {
             return response('Daten konnten nicht gespeichert werden. Bitte erneut versuchen.', 500);
         }

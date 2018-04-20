@@ -32,6 +32,7 @@ class User extends Model implements
         'country',
         'phone',
         'company',
+        'delivery_salutation',
         'delivery_name',
         'delivery_street',
         'delivery_zip',

@@ -24,6 +24,14 @@ $router->post('/order', 'OrderController@send');
 $router->get('user/activate/{code}', 'UserController@activate');
 $router->post('user/login', 'UserController@login');
 $router->post('user/register', 'UserController@register');
+$router->post('user/auth', [
+    'middleware' => 'authToken',
+    'uses' => 'UserController@auth'
+]);
+$router->post('user/orders', [
+    'middleware' => 'authToken',
+    'uses' => 'UserController@orders'
+]);
 $router->post('user/info', [
     'middleware' => 'authToken',
     'uses' => 'UserController@info'
