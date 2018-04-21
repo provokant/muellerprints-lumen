@@ -24,6 +24,9 @@ class OrderController extends Controller
     public function send(Request $request)
     {
         $this->validate($request, [
+            'order_number' => 'required',
+            'user_id' => 'required',
+            'salutation' => 'required',
             'name' => 'required',
             'street' => 'required',
             'zip' => 'required',
@@ -37,20 +40,21 @@ class OrderController extends Controller
             'disclaimer' => 'required',
             'products' => 'required',
             'sum' => 'required',
-            'delivery',
-	        'shippingCost'
+            'delivery_salutation' => '',
+            'delivery_name' => '',
+            'delivery_street' => '',
+            'delivery_zip' => '',
+            'delivery_town' => '',
+            'delivery_country' => '',
+	        'shippingCost' => ''
         ]);
 
-        // Log::info($request);
+        $order = Order::create($request->all());
 
         $mail = [
-            'order' => new Order($request->all()), 
+            'order' => $order, 
             'date' => Carbon::now()->formatLocalized('%d.%m.%Y um %H:%M Uhr')
         ];
-
-        Log::info($mail['order']['products']);
-
-        // dd($mail['order']['products']);
 
         Mail::send('mails.order.admin', $mail, function ($m) {
             $m->to(env('MAIL_TO'));

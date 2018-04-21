@@ -88,7 +88,13 @@
 		<td bgcolor="#fff" style="padding: 20px 0;">
 
 			@section('content')
-				Soeben wurde eine neue Bestellung auf notizbücher-shop.com aufgegeben:
+				<p>
+					Soeben wurde eine neue Bestellung auf notizbücher-shop.com aufgegeben:
+				</p>
+
+				<p>
+					<strong>Bestellnummer: {{ $order['order_number'] }}</strong>
+				</p>
 				
 				<table width="100%" cellpadding="0" cellspacing="0" border="0" class="devicewidth" hlitebg="edit" shadow="edit" style="font-family: Helvetica, Arial, sans-serif; font-size: 14px; line-height: 18px; padding: 20px 0;">
 					<tr>

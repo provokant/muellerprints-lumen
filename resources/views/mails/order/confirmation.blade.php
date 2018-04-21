@@ -88,7 +88,13 @@
 		<td bgcolor="#fff" style="padding: 20px 0;">
 
 			@section('content')
-				Soeben wurde eine neue Bestellung auf notizbücher-shop.com aufgegeben:
+				<p>Herzlichen Dank für Ihre Bestellung!</p>
+
+				<p>Soeben ist Ihre Bestellung eingegangen und wird umgehend bearbeitet. Ihre Bestellnummer lautet:</p>
+
+				<p>
+					<strong>Bestellnummer: {{ $order['order_number'] }}</strong>
+				</p>
 				
 				<table width="100%" cellpadding="0" cellspacing="0" border="0" class="devicewidth" hlitebg="edit" shadow="edit" style="font-family: Helvetica, Arial, sans-serif; font-size: 14px; line-height: 18px; padding: 20px 0;">
 					<tr>
@@ -163,13 +169,13 @@
 					</tr>
 				</table>
 
-				@if($order['payment'] == 'prepayment')
+				@if($order['payment'] == 'Vorkasse')
 					<p style="padding: 10px; background: #ddd">
 						<strong>COMMERZBANK</strong><br>
 						<strong>Max Müller</strong><br>
 						IBAN: <strong>DE1234123412341234</strong><br>
 						BIC: <strong>23456789</strong><br>
-						Verwendungszweck: K12345<br>
+						Verwendungszweck: <strong>{{ $order['order_number'] }}</strong><br>
 						<br>
 						<strong>Bitte überweisen Sie den obenstehenden Betrag in den kommenden 5 Werktagen.</strong>
 					<p>
