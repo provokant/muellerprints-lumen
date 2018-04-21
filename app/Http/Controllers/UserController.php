@@ -65,7 +65,7 @@ class UserController extends Controller
             $user->activated = true;
             $user->activation_code = null;
             $user->save();
-            return response('Konto erfolgreich aktiviert.', 200);
+            return redirect(env('APP_URL'));
         } else {
           return response('Konto wurde bereits aktiviert.', 500);
         }

@@ -66,6 +66,10 @@ class OrderController extends Controller
             $m->subject('Bestellbestätigung auf notizbücher-shop.com');
         });
 
-        return response($mail['order'], 200);
+        return response()->json([
+            'order_number' => $order->order_number,
+            'order_status' => $order->order_status,
+            'sum' => $order->sum
+        ]);
     }
 }

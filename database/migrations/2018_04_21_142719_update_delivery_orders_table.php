@@ -38,16 +38,16 @@ class UpdateDeliveryOrdersTable extends Migration
      */
     public function down()
     {
-        $columnsToDelete = [
-            'delivery_salutation', 
-            'delivery_name', 
-            'delivery_street',
-            'delivery_zip',
-            'delivery_town',
-            'delivery_country'
-        ];
-
         Schema::table('orders', function (Blueprint $table) {
+            $columnsToDelete = [
+                'delivery_salutation', 
+                'delivery_name', 
+                'delivery_street',
+                'delivery_zip',
+                'delivery_town',
+                'delivery_country'
+            ];
+
             foreach ($columnsToDelete as $column) {
                 if (Schema::hasColumn('users', $column)) {
                     $table->dropColumn($column);
