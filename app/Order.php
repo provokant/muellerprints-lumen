@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model {
 
   protected $fillable = [
+    'user_id',
+    'salutation',
     'name',
     'street',
     'zip',
@@ -20,7 +22,12 @@ class Order extends Model {
     'disclaimer',
     'products',
     'sum',
-    'delivery',
+    'delivery_salutation',
+    'delivery_name',
+    'delivery_street',
+    'delivery_zip',
+    'delivery_town',
+    'delivery_country',
     'shippingCost'
   ];
 
