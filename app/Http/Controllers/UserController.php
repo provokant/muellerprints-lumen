@@ -53,8 +53,8 @@ class UserController extends Controller
         $user = User::create($input);
 
         $mail = [
-            'api_url' => env('API_URL'),
-            'endpoint' => 'user/activate/',
+            'app_url' => env('APP_URL'),
+            'endpoint' => 'activate/',
             'activation' => $activation, 
             'date' => Carbon::now()->formatLocalized('%d.%m.%Y um %H:%M Uhr')
         ];
