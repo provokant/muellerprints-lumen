@@ -137,7 +137,8 @@ class UserController extends Controller
      * Get all User Orders
      */
     public function orders() {
-        return response()->json(Auth::user()->orders());
+	//dd(Auth::user()->load('orders'));
+        return response()->json(Auth::user()->load('orders')->orders);
     }
 
 
