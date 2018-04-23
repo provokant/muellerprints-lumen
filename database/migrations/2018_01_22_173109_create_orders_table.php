@@ -27,7 +27,7 @@ class CreateOrdersTable extends Migration
             $table->string('payment');
             $table->boolean('terms');
             $table->boolean('disclaimer');
-            $table->string('products');
+            $table->longText('products');
             $table->string('sum');
             $table->string('delivery')->nullable();
             $table->string('shippingCost');
