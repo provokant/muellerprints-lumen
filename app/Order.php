@@ -9,6 +9,7 @@ class Order extends Model {
   protected $fillable = [
     'user_id',
     'order_number',
+    'order_status',
     'salutation',
     'name',
     'street',
@@ -29,7 +30,8 @@ class Order extends Model {
     'delivery_zip',
     'delivery_town',
     'delivery_country',
-    'shippingCost'
+    'shippingCost',
+    'checkout_id'
   ];
 
   protected $hidden = [

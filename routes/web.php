@@ -20,6 +20,7 @@ $router->post('/', 'MailController@send');
 $router->post('/mail', 'MailController@send');
 
 $router->post('/order', 'OrderController@send');
+$router->post('/order/checkout-info', 'OrderController@checkoutInfo');
 
 $router->get('user/activate/{code}', 'UserController@activate');
 $router->post('user/login', 'UserController@login');

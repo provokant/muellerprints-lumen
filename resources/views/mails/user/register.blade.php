@@ -95,13 +95,13 @@
         <p>Bitte bestätigen Sie Ihre Registrierung mit folgendem Link:</p>
 
         <p>
-          <a href="https://picasso.uber.space/user/activate/{{ $activation }}">Konto aktivieren</a>
+          <a href="{{ $api_url }}{{ $endpoint }}{{ $activation }}">Konto aktivieren</a>
         </p>
 
 				<p>Oder öffnen Sie folgenden Link manuell in Ihrem gewünschten Browser:</p>
 
 				<p>
-					https://picasso.uber.space/user/activate/{{ $activation }}
+					{{ $api_url }}{{ $endpoint }}{{ $activation }}
 				</p>
 
 				<p>

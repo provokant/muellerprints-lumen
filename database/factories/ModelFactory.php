@@ -57,7 +57,6 @@ $factory->define(App\Order::class, function (Faker\Generator $faker) {
         'disclaimer' => 1,
         'products' => $faker->text,
         'sum' => $sum,
-        'delivery' => $faker->text,
         'shippingCost' => $shippingCost,
 
         'user_id' => function ($faker) {

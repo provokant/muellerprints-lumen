@@ -22,6 +22,20 @@ class UserController extends Controller
         $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required',
+            'salutation' => 'required',
+            'name' => 'required',
+            'street' => 'required',
+            'zip' => 'required',
+            'town' => 'required',
+            'country' => 'required',
+            'phone' => '',
+            'company' => '',
+            'delivery_salutation' => '',
+            'delivery_name' => '',
+            'delivery_street' => '',
+            'delivery_zip' => '',
+            'delivery_town' => '',
+            'delivery_country' => ''
         ]);
 
         $input = $request->all();
@@ -32,14 +46,15 @@ class UserController extends Controller
 
         $activation = str_random(60);
 
-        $user = User::create([
-            'email' => $input['email'],
-            'password' => (new BcryptHasher)->make($input['password']),
-            'activated' => false,
-            'activation_code' => $activation
-        ]);
+        $input['activation_code'] = $activation;
+        $input['activated'] = false;
+        $input['password'] = (new BcryptHasher)->make($input['password']);
+
+        $user = User::create($input);
 
         $mail = [
+            'api_url' => env('API_URL'),
+            'endpoint' => 'user/activate/',
             'activation' => $activation, 
             'date' => Carbon::now()->formatLocalized('%d.%m.%Y um %H:%M Uhr')
         ];
@@ -65,7 +80,8 @@ class UserController extends Controller
             $user->activated = true;
             $user->activation_code = null;
             $user->save();
-            return redirect(env('APP_URL'));
+            // return redirect(env('APP_URL'));
+            return response('Konto erfolgreich aktiviert.', 200);
         } else {
           return response('Konto wurde bereits aktiviert.', 500);
         }

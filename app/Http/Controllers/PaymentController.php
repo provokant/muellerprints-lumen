@@ -5,10 +5,10 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 // use Carbon\Carbon;
-// use App\User;
+use App\Order;
 use App\Payment;
 // use Auth;
-// use Log;
+use Log;
 
 class PaymentController extends Controller
 {
@@ -34,18 +34,14 @@ class PaymentController extends Controller
         $payment = new Payment($request->all());
 
         try {
-
             $response = (new Client())->request('POST', $payment->url(), [
                 'form_params' => $payment->prepareConnection()
             ]);
-
+            $body = json_decode((string) $response->getBody());
+            return response()->json($body, 200);
         } catch(RequestException $e) {
             return response('Internal Server Error.', 500);
         } 
-
-        $body = json_decode((string) $response->getBody());
-
-        return response()->json($body, 200);
     }
 
     /**
@@ -56,27 +52,29 @@ class PaymentController extends Controller
 
     public function status (Request $request) {
         $this->validate($request, [
-            'id' => 'required'
+            'checkout_id' => 'required'
         ]);
         $input = $request->all();
-        $payment = new Payment();
         $client = new Client();
+        $order = Order::where('checkout_id', $input['checkout_id'])->get();
 
         try {
-            
             $uri = implode('/', [
-                $payment->url(),
-                $input['id'],
+                env('VRPAY_HOST'),
+                $input['checkout_id'],
                 'payment'
             ]);
             $response = $client->request('GET', $uri);
+            $body = json_decode((string) $response->getBody());
 
+            if ($body->result->code == '000.100.110' && env('APP_ENV') !== 'production') {
+
+            } else {
+
+            }
+            return response()->json($body);
         } catch (RequestException $e) {
             return response('Internal Server Error.', 500);
         }
-
-        $body = json_decode((string) $response->getBody());
-
-        return response()->json($body, 200);
     }
 }

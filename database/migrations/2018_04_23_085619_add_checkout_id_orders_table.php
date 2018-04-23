@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddStatusOrdersTable extends Migration
+class AddCheckoutIdOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,10 @@ class AddStatusOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            if (Schema::hasColumn('orders', 'order_number')) {
-                $table->enum('order_status', ['open', 'pending', 'payed', 'deleted'])->default('open')->after('order_number');
+            if (Schema::hasColumn('orders', 'checkout_id')) {
+                $table->string('checkout_id')->nullable()->after('shippingCost');
             } else {
-                $table->enum('order_status', ['open', 'pending', 'payed', 'deleted'])->default('open');
+                $table->string('checkout_id')->nullable();
             }
         });
     }
@@ -30,8 +30,8 @@ class AddStatusOrdersTable extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-            if (Schema::hasColumn('orders', 'order_status')) {
-                $table->dropColumn('order_status');
+            if (Schema::hasColumn('orders', 'checkout_id')) {
+                $table->dropColumn('checkout_id');
             }
         });
     }

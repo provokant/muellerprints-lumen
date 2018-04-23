@@ -15,7 +15,7 @@ class Payment extends Model {
 
   public function prepareConnection() {
     return [
-      'amount' => $this->amount,
+      'amount' => number_format($this->amount, 2),
       'paymentType' => $this->type,
       'currency' => env('VRPAY_CURRENCY'),
       'authentication.userId' => env('VRPAY_USER'),
@@ -33,6 +33,6 @@ class Payment extends Model {
   }
 
   public function url() {
-    return (env('APP_ENV') === 'production' ? env('VRPAY_HOST') : env('VRPAY_TEST'));
+    return env('VRPAY_HOST');
   }
 }

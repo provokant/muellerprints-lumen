@@ -25,7 +25,7 @@ class OrderController extends Controller
     {
         $this->validate($request, [
             'order_number' => 'required',
-            'user_id' => 'required',
+            'user_id' => '',
             'salutation' => 'required',
             'name' => 'required',
             'street' => 'required',
@@ -46,7 +46,8 @@ class OrderController extends Controller
             'delivery_zip' => '',
             'delivery_town' => '',
             'delivery_country' => '',
-	        'shippingCost' => ''
+	        'shippingCost' => '',
+	        'checkout_id' => '',
         ]);
 
         $order = Order::create($request->all());
@@ -71,5 +72,24 @@ class OrderController extends Controller
             'order_status' => $order->order_status,
             'sum' => $order->sum
         ]);
+    }
+
+    public function checkoutInfo(Request $request)
+    {
+        $this->validate($request, [
+            'checkout_id' => ''
+        ]);
+        $input = $request->all();
+
+        try {
+            $order = Order::where('checkout_id', $input['checkout_id'])->get()[0];
+
+            return response()->json($order);
+
+        } catch (Exception $e) {
+            abort(404);
+        }
+
+
     }
 }
