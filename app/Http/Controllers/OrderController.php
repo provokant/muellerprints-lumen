@@ -83,13 +83,9 @@ class OrderController extends Controller
 
         try {
             $order = Order::where('checkout_id', $input['checkout_id'])->get()[0];
-
             return response()->json($order);
-
         } catch (Exception $e) {
             abort(404);
         }
-
-
     }
 }
