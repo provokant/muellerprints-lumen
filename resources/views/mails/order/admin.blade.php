@@ -42,7 +42,7 @@
 		<tbody>
 		<tr>
 			<td>
-				<table width="580" bgcolor="#f00" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth" hlitebg="edit" shadow="edit">
+				<table width="580" bgcolor="#3c6c9e" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth" hlitebg="edit" shadow="edit">
 					<tbody>
 					<tr>
 						<td>
