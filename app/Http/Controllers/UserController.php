@@ -225,7 +225,7 @@ class UserController extends Controller
         
         $input = $request->all();
 
-        $user = User::where('token', $input['token'])
+        $user = User::where('password_reset', $input['token'])
             ->first();
 
         if (empty($user)) {
