@@ -232,12 +232,12 @@ class UserController extends Controller
             return response('Der Link ist abgelaufen. Bitte setzen Sie Ihr Passwort erneut zurück.', 401);
         }
 
-        if ($input->password_new != $input->password_new_confirmation) {
+        if ($input['password_new'] != $input['password_new_confirmation']) {
             return response('Die neuen Passwörter stimmen nicht überein.', 401);
         }
 
         try {
-            $user->password = (new BcryptHasher)->make($input->password_new);
+            $user->password = (new BcryptHasher)->make($input['password_new']);
             $user->save();
 
             return response('Passwort wurde erfolgreich geändert.', 200);
