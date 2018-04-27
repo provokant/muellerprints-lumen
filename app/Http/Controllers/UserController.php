@@ -238,6 +238,7 @@ class UserController extends Controller
 
         try {
             $user->password = (new BcryptHasher)->make($input['password_new']);
+            $user->password_reset = '';
             $user->save();
 
             return response('Passwort wurde erfolgreich geändert.', 200);
