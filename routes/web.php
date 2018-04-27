@@ -25,6 +25,8 @@ $router->post('/order/checkout-info', 'OrderController@checkoutInfo');
 $router->get('user/activate/{code}', 'UserController@activate');
 $router->post('user/login', 'UserController@login');
 $router->post('user/register', 'UserController@register');
+$router->post('user/send-reset-token', 'UserController@sendResetToken');
+$router->post('user/reset-password', 'UserController@resetPassword');
 $router->post('user/auth', [
     'middleware' => 'authToken',
     'uses' => 'UserController@auth'

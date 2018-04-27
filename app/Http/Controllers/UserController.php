@@ -137,10 +137,8 @@ class UserController extends Controller
      * Get all User Orders
      */
     public function orders() {
-	//dd(Auth::user()->load('orders'));
         return response()->json(Auth::user()->load('orders')->orders);
     }
-
 
     /**
      * Update User Password
@@ -179,6 +177,75 @@ class UserController extends Controller
         }
     }
 
+    public function sendResetToken(Request $request){
+        $this->validate($request, [
+            'email' => 'required|email',
+        ]);
+        
+        $input = $request->all();
+
+        $user = User::where('email', $input['email'])
+            ->where('activated', true)
+            ->first();
+
+        if (empty($user)) {
+            return response('Bitte Überprüfen Sie die eingegebene E-Mail-Adresse.', 401);
+        }
+
+        $resetToken = str_random(60);
+
+        try {
+            $user->password_reset = $resetToken;
+            $user->save();
+
+            $mail = [
+                'app_url' => env('APP_URL'),
+                'endpoint' => 'reset-password/',
+                'token' => $resetToken, 
+                'date' => Carbon::now()->formatLocalized('%d.%m.%Y um %H:%M Uhr')
+            ];
+    
+            Mail::send('mails.user.reset', $mail, function ($m) use ($user)  {
+                $m->to($user['email']);
+                $m->subject('Passwort zurücksetzen auf notizbücher-shop.com');
+            });
+
+            return response('Bitte prüfen Sie Ihre E-Mails. Wir haben Ihnen einen Link zum Zurücksetzen des Passworts gesendet.', 200);
+        } catch (Exception $e) {
+            return response('Daten konnten nicht gespeichert werden. Bitte erneut versuchen.', 500);
+        }
+    }
+
+    public function resetPassword(Request $request){
+        $this->validate($request, [
+            'token' => 'required',
+            'password_new' => 'required',
+            'password_new_confirmation' => 'required',
+        ]);
+        
+        $input = $request->all();
+
+        $user = User::where('token', $input['token'])
+            ->first();
+
+        if (empty($user)) {
+            return response('Der Link ist abgelaufen. Bitte setzen Sie Ihr Passwort erneut zurück.', 401);
+        }
+
+        if ($input->password_new != $input->password_new_confirmation) {
+            return response('Die neuen Passwörter stimmen nicht überein.', 401);
+        }
+
+        try {
+            $user->password = (new BcryptHasher)->make($input->password_new);
+            $user->save();
+
+            return response('Passwort wurde erfolgreich geändert.', 200);
+        } catch (Exception $e) {
+            return response('Daten konnten nicht gespeichert werden. Bitte erneut versuchen.', 500);
+        }
+    }
+
     /**
      * Update User Email
      */
@@ -200,7 +267,7 @@ class UserController extends Controller
         }
 
         if ($input->email_new != $input->email_new_confirmation) {
-            return response('Die neuen E-Mails stimmen nicht übrerein.', 401);
+            return response('Die neuen E-Mails stimmen nicht überein.', 401);
         }
 
         if ($input->email_new == $user->email) {
