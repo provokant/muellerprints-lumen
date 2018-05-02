@@ -54,7 +54,7 @@ class UserController extends Controller
 
         $mail = [
             'app_url' => env('APP_URL'),
-            'endpoint' => 'activate/',
+            'endpoint' => '#!/activate/',
             'activation' => $activation, 
             'date' => Carbon::now()->formatLocalized('%d.%m.%Y um %H:%M Uhr')
         ];
@@ -200,7 +200,7 @@ class UserController extends Controller
 
             $mail = [
                 'app_url' => env('APP_URL'),
-                'endpoint' => 'reset-password/',
+                'endpoint' => '#!/reset-password/',
                 'token' => $resetToken, 
                 'date' => Carbon::now()->formatLocalized('%d.%m.%Y um %H:%M Uhr')
             ];

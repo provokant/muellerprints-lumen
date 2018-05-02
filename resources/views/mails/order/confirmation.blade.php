@@ -171,10 +171,10 @@
 
 				@if($order['payment'] == 'Vorkasse')
 					<p style="padding: 10px; background: #ddd">
-						<strong>COMMERZBANK</strong><br>
+						<strong>Stuttgarter Volksbank eG</strong><br>
 						<strong>Max Müller</strong><br>
-						IBAN: <strong>DE1234123412341234</strong><br>
-						BIC: <strong>23456789</strong><br>
+						IBAN: <strong>DE73 6009 0100 0525 0360 08</strong><br>
+						BIC: <strong>VOBADESS</strong><br>
 						Verwendungszweck: <strong>{{ $order['order_number'] }}</strong><br>
 						<br>
 						<strong>Bitte überweisen Sie den obenstehenden Betrag in den kommenden 5 Werktagen.</strong>

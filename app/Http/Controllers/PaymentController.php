@@ -67,12 +67,9 @@ class PaymentController extends Controller
             $response = $client->request('GET', $uri);
             $body = json_decode((string) $response->getBody());
 
-            if ($body->result->code == '000.100.110' && env('APP_ENV') !== 'production') {
-
-            } else {
-
-            }
-            return response()->json($body);
+            if ($body->result->code == '000.100.110' || $body->result->code == '000.000.000') {
+            	return response()->json($body);
+	    }	
         } catch (RequestException $e) {
             return response('Internal Server Error.', 500);
         }
