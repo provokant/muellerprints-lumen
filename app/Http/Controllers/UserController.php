@@ -160,11 +160,11 @@ class UserController extends Controller
         }
 
         if ($input->password_new != $input->password_new_confirmation) {
-            return response('Die neuen Passwörter stimmen nicht übrerein.', 401);
+            return response('Die neuen Passwörter stimmen nicht überein.', 401);
         }
 
         if ((new BcryptHasher)->check($input->password_new, $user->password)) {
-            return response('Das neue Passwort unterscheidet sich nicht von der alten.', 401);
+            return response('Das neue Passwort unterscheidet sich nicht von dem alten Passwort.', 401);
         }
 
         try {
