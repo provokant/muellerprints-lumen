@@ -40,7 +40,7 @@
 	</table>
 </div>
 
-@include('mails.partials.header')
+@include('mails.partials.footer')
 
 </body>
 </html>
