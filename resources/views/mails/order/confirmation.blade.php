@@ -24,12 +24,12 @@
 				@if($order['payment'] == 'Vorkasse')
 					<p style="padding: 10px; background: #ddd">
 						Bank: <strong>Stuttgarter Volksbank eG</strong><br>
-						Inhaber: <strong>Max Müller</strong><br>
+						Empfänger: <strong>Max Müller</strong><br>
 						IBAN: <strong>DE73 6009 0100 0525 0360 08</strong><br>
 						BIC: <strong>VOBADESS</strong><br>
 						Verwendungszweck: <strong>{{ $order['order_number'] }}</strong><br>
 						<br>
-						<strong>Bitte überweisen Sie den obenstehenden Betrag.</strong>
+						<strong>Bitte überweisen Sie den Gesamtbetrag in Höhe von {{ number_format($order['sum'], 2, ',', '.') }} € auf obenstehendes Konto.</strong>
 					<p>
 				@endif
 			@show
