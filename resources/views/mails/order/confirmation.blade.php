@@ -18,6 +18,9 @@
 				<p>
 					<strong>Bestellnummer: {{ $order['order_number'] }}</strong>
 				</p>
+				<p>
+					<strong>Rechnungsnummer: R-{{ $order['order_number'] }}</strong>
+				</p>
 				
 				@include('mails.partials.order', array('order' => $order))
 

@@ -17,7 +17,9 @@
 				<p>
 					Soeben wurde eine neue Bestellung auf notizbücher-shop.com aufgegeben:
 				</p>
-
+				<p>
+					<strong>Bestellnummer: {{ $order['order_number'] }}</strong>
+				</p>
 				<p>
 					<strong>Rechnungsnummer: R-{{ $order['order_number'] }}</strong>
 				</p>
