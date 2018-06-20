@@ -82,68 +82,16 @@
 </div>
 
 <div class="block" bgcolor="#f6f4f5" >
-<table width="580" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth" hlitebg="edit" shadow="edit" style="font-family: Helvetica, Arial, sans-serif;font-size: 14px; line-height: 18px;">
-	<tbody>
-	<tr>
-		<td bgcolor="#fff" style="padding: 20px 0;">
+	<table width="580" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth" hlitebg="edit" shadow="edit" style="font-family: Helvetica, Arial, sans-serif;font-size: 14px; line-height: 18px;">
+		<tbody>
+		<tr>
+			<td bgcolor="#fff" style="padding: 20px 0;">
 
-@section('content')
-	Es wurde eine Anfrage von muellerpints.de am <strong>{{ $date }}</strong> verschickt:
-	<table width="100%" cellpadding="0" cellspacing="0" border="0" class="devicewidth" hlitebg="edit" shadow="edit" style="font-family: Helvetica, Arial, sans-serif; font-size: 14px; line-height: 18px; padding: 20px 0;">
-		<tr>
-			<td width="30%">Name: </td>
-			<td width="70%">{{ $inquiry['name'] }}</td>
-		</tr>
-		<tr>
-			<td>Telefonnummer: </td>
-			<td>{{ $inquiry['phone'] }}</td>
-		</tr>
-		<tr>
-			<td>E-Mail-Adresse: </td>
-			<td>{{ $inquiry['mail'] }}</td>
-		</tr>
-		<tr>
-			<td>Stichwort: </td>
-			<td>{{ $inquiry['title'] }}</td>
-		</tr>
-		<tr>
-			<td>Produkt: </td>
-			<td>{{ $inquiry['product'] }}</td>
-		</tr>
-		<tr>
-			<td>Format: </td>
-			<td>{{ $inquiry['format'] }}</td>
-		</tr>
-		<tr>
-			<td>Seitenanzahl: </td>
-			<td>{{ $inquiry['pages'] }}</td>
-		</tr>
-		<tr>
-			<td>Ausrichtung: </td>
-			<td>{{ $inquiry['orientation'] }}</td>
-		</tr>
-		<tr>
-			<td>Druck: </td>
-			<td>{{ $inquiry['printing'] }}</td>
-		</tr>
-		<tr>
-			<td>Farbe: </td>
-			<td>{{ $inquiry['colors'] }}</td>
-		</tr>
-		<tr>
-			<td>Papier & Gewicht: </td>
-			<td>{{ $inquiry['material'] }}</td>
-		</tr>
-		<tr>
-			<td>Auflage: </td>
-			<td>{{ $inquiry['edition'] }}</td>
-		</tr>
-		<tr>
-			<td>Objektbeschreibung: </td>
-			<td>{{ $inquiry['description'] }}</td>
-		</tr>
-	</table>
-@show
+				@section('content')
+					Es wurde eine Bestellung auf muellerpints.de am <strong>{{ $date }}</strong> abgegeben:
+					
+					@include('mails.partials.checklist', array('checklist' => $checklist))
+				@show
 
 			</td>
 		</tr>

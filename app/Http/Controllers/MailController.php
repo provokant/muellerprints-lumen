@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Inquiry;
+use App\Checklist;
 use App\Mail\InquiryRecieved;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class MailController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function send(Request $request)
+    public function sendInquiry(Request $request)
     {
         $this->validate($request, [
             'name' => 'required',
@@ -54,5 +55,54 @@ class MailController extends Controller
         });
 
         return response($mail['inquiry'], 200);
+    }
+
+     /**
+     * Send mail to administrator, if mail is sufficiantly filled.
+     * Validate data and throw eventually an error.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function sendChecklist(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'street' => 'required',
+            'zip' => 'required',
+            'town' => 'required',
+            'mail' => 'required|email',
+            'phone' => 'required',
+            'pages' => 'required',
+            'title' => 'required',
+            'product' => 'required',
+            'format' => 'required',
+            'pages' => 'required',
+            'orientation' => 'required',
+            'printing' => 'required',
+            'colors' => 'required',
+            'material' => 'required',
+            'cover-material' => 'required',
+            'edition' => 'required',
+            'description' => 'required',
+            'date' => 'required',
+        ]);
+
+        $mail = [
+            'checklist' => new Checklist($request->all()), 
+            'date' => Carbon::now()->formatLocalized('%d.%m.%Y um %H:%M Uhr')
+        ];
+
+        Mail::send('mails.checklist.admin', $mail, function ($m) {
+            $m->to(env('MAIL_TO'));
+            $m->subject('Bestellung auf muellerprints.de');
+        });
+
+        Mail::send('mails.checklist.confirmation', $mail, function ($m) use ($mail) {
+            $m->to($mail['checklist']['mail']);
+            $m->subject('Bestätigung Ihrer Bestellung auf muellerprints.de');
+        });
+
+        return response($mail['checklist'], 200);
     }
 }

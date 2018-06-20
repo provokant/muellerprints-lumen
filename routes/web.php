@@ -15,9 +15,10 @@ $router->get('/', function() use ($router) {
     return 'API powered by NEXTLEVELSHIT (www.dailysh.it) · mail@dailysh.it for questions';
 });
 
-$router->post('/', 'MailController@send');
+$router->post('/', 'MailController@sendInquiry');
+$router->post('/mail', 'MailController@sendInquiry');
 
-$router->post('/mail', 'MailController@send');
+$router->post('/checklist', 'MailController@sendChecklist');
 
 $router->post('/order', 'OrderController@send');
 $router->post('/order/checkout-info', 'OrderController@checkoutInfo');
