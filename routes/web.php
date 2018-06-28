@@ -11,6 +11,10 @@
 |
 */
 
+
+use Illuminate\Http\Request;
+use App\Order;
+
 $router->get('/', function() use ($router) {
     return 'API powered by NEXTLEVELSHIT (www.dailysh.it) · mail@dailysh.it for questions';
 });
@@ -52,6 +56,10 @@ $router->post('user/update/info', [
     'middleware' => 'authToken',
     'uses' => 'UserController@updateInfo'
 ]);
+$router->post('user/order/{id}/delete', [
+    'middleware' => 'authToken',
+    'uses' => 'UserController@deleteOrder'
+]);
 
 $router->post('payment/prepare', 'PaymentController@prepare');
 $router->post('payment/status', 'PaymentController@status');
@@ -73,6 +81,27 @@ if (env('APP_ENV') != 'production') {
     
     $router->get('orders', function() {
         return response(App\Order::all()->load('user'));
+    });
+
+    $router->get('orders/{id:[0-9]+}', function($id) {
+        return response(App\Order::findOrFail($id)->load('user'));
+    });
+
+    $router->get('user/{user:[0-9]+}/order/{order:[0-9]+}', function($user, $order) {
+        return response(App\User::findOrFail($user)->orders->where('id', $order)->first());
+    });
+
+    $router->get('user/{user:[0-9]+}/order/{order:[0-9]+}/delete', function($user, $order) {
+        $orderId = App\User::findOrFail($user)->orders->where('id', $order)->first()->id;
+
+        $order = App\Order::findOrFail($orderId)->first();
+
+        try {
+            $order->forceDelete();
+            return response('Bestellung wurde erfolgreich gelöscht.', 200);
+        } catch (Exception $e) {
+            return response('Die ausgewählte Bestellung konnte nicht gefunden werden.', 404);
+        }
     });
 }
 

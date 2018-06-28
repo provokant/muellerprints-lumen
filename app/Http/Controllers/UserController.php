@@ -338,4 +338,20 @@ class UserController extends Controller
             return response('Daten konnten nicht gespeichert werden. Bitte erneut versuchen.', 500);
         }
     }
+
+    public function deleteOrder(Request $request, $id) {
+
+        if (Auth::user()->orders->where('id', $id)->first()) {
+            $order = App\Order::findOrFail($id)->first();
+        } else {
+            return response('Die ausgewählte Bestellung konnte nicht gefunden werden.', 404);
+        }
+
+        try {
+            $order->forceDelete();
+            return response('Bestellung wurde erfolgreich gelöscht.', 200);
+        } catch (Exception $e) {
+            return response('Die ausgewählte Bestellung konnte nicht gelöscht werden.', 500);
+        }
+    }
 }
