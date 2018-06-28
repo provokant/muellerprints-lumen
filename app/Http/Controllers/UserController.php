@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\User;
+use App\Order;
 use Auth;
 use Log;
 
@@ -342,7 +343,7 @@ class UserController extends Controller
     public function deleteOrder(Request $request, $id) {
 
         if (Auth::user()->orders->where('id', $id)->first()) {
-            $order = App\Order::findOrFail($id)->first();
+            $order = Order::findOrFail($id)->first();
         } else {
             return response('Die ausgewählte Bestellung konnte nicht gefunden werden.', 404);
         }
