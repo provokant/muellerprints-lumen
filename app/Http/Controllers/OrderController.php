@@ -54,7 +54,7 @@ class OrderController extends Controller
 
         $mail = [
             'order' => $order, 
-            'date' => Carbon::now()->formatLocalized('%d.%m.%Y um %H:%M Uhr')
+            'date' => Carbon::now()->formatLocalized('%d.%m.%Y')
         ];
 
         Mail::send('mails.order.admin', $mail, function ($m) {

@@ -8,7 +8,7 @@
 @include('mails.partials.header', array('date' => $date))
 
 <div class="block" bgcolor="#f6f4f5" >
-<table width="580" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth" hlitebg="edit" shadow="edit" style="font-family: Helvetica, Arial, sans-serif;font-size: 14px; line-height: 18px;">
+<table width="680" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth" hlitebg="edit" shadow="edit" style="font-family: Helvetica, Arial, sans-serif;font-size: 14px; line-height: 18px;">
 	<tbody>
 	<tr>
 		<td bgcolor="#fff" style="padding: 20px 0;">

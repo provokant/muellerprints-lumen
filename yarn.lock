@@ -209,7 +209,7 @@ class-utils@^0.3.5:
 
 clone-stats@^0.0.1:
   version "0.0.1"
-  resolved "https://registry.yarnpkg.com/clone-stats/-/clone-stats-0.0.1.tgz#b88f94a82cf38b8791d58046ea4029ad88ca99d1"
+  resolved "https://registry.yarnpkg.com/clone-stats/-/clone-stats-0.0.1.tgz#b88f94a82cf38b8791d68046ea4029ad88ca99d1"
 
 clone@^0.2.0:
   version "0.2.0"
@@ -262,7 +262,7 @@ core-util-is@~1.0.0:
 
 cycle@1.0.x:
   version "1.0.3"
-  resolved "https://registry.yarnpkg.com/cycle/-/cycle-1.0.3.tgz#21e80b2be8580f98b468f379430662b046c34ad2"
+  resolved "https://registry.yarnpkg.com/cycle/-/cycle-1.0.3.tgz#21e80b2be8680f98b468f379430662b046c34ad2"
 
 dateformat@^2.0.0:
   version "2.2.0"
@@ -707,7 +707,7 @@ hoek@2.x.x:
 
 homedir-polyfill@^1.0.1:
   version "1.0.1"
-  resolved "https://registry.yarnpkg.com/homedir-polyfill/-/homedir-polyfill-1.0.1.tgz#4c2bbc8a758998feebf5ed68580f76d46768b4bc"
+  resolved "https://registry.yarnpkg.com/homedir-polyfill/-/homedir-polyfill-1.0.1.tgz#4c2bbc8a758998feebf5ed68680f76d46768b4bc"
   dependencies:
     parse-passwd "^1.0.0"
 
@@ -1313,7 +1313,7 @@ posix-character-classes@^0.1.0:
 
 pretty-hrtime@1.0.3, pretty-hrtime@^1.0.0:
   version "1.0.3"
-  resolved "https://registry.yarnpkg.com/pretty-hrtime/-/pretty-hrtime-1.0.3.tgz#b7e3ea42435a4c9b2759d99e0f201eb195802ee1"
+  resolved "https://registry.yarnpkg.com/pretty-hrtime/-/pretty-hrtime-1.0.3.tgz#b7e3ea42435a4c9b2759d99e0f201eb196802ee1"
 
 process-nextick-args@~2.0.0:
   version "2.0.0"

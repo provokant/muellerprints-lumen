@@ -53,7 +53,7 @@
         </ul>
 
         <div>Stückzahl: {{ $product->amount }}</div>
-        <div>Preis: {{ $product->total }}</div>
+        <div><strong>Preis: {{ $product->total }}</strong></div>
 
         <hr/>
       @endforeach
@@ -61,16 +61,20 @@
   </tr>
   <tr><td colspan="2"><br></td></tr>
   <tr>
+    <td valign="top">Versandkosten:</td>
+    <td valign="top">{{ $order['shippingCost'] }}</td>
+  </tr>
+  <tr>
+    <td valign="top">19% MwSt.:</td>
+    <td valign="top">{{ number_format((int)$order['sum'] * 0.19, 2, ',', '.') }} €</td>
+  </tr>
+  <tr>
     <td valign="top"><strong>Gesamtbetrag:</strong> </td>
     <td valign="top">
       <strong>{{ number_format($order['sum'], 2, ',', '.') }} €</strong>
-      inkl. Versandkosten
-    </td>
-  </tr>
-  <tr>
-    <td valign="top">inkl. 19% MwSt.</td>
-    <td valign="top">
-      {{ number_format((int)$order['sum'] * 0.19, 2, ',', '.') }} €
+      inkl. MwSt.
     </td>
   </tr>
 </table>
+
+<p>Lieferung erfolgt nach vollständiger Bezahlung der Rechnung.</p>

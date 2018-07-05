@@ -4,7 +4,7 @@
 		<tbody>
 		<tr>
 			<td width="100%">
-				<table width="580" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+				<table width="680" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
 					<tbody>
 					<!-- Spacing -->
 					<tr>
@@ -35,7 +35,7 @@
 		<tbody>
 		<tr>
 			<td>
-				<table width="580" bgcolor="#3c6c9e" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth" hlitebg="edit" shadow="edit">
+				<table width="680" bgcolor="#3c6c9e" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth" hlitebg="edit" shadow="edit">
 					<tbody>
 					<tr>
 						<td>
@@ -45,7 +45,7 @@
 								<tr>
 									<td valign="middle" width="270" style="padding: 10px 0 10px 20px;" class="logo">
 										<div  color="#fff" style="font-family: Helvetica, arial, sans-serif; font-size: 10px; color: #fff; font-weight: bold;">
-											muellerprints.
+											muellerprints. Notizbücher
 										</div>
 									</td>
 								</tr>
