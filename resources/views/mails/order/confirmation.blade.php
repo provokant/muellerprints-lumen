@@ -21,6 +21,9 @@
 				<p>
 					<strong>Rechnungsnummer: R-{{ $order['order_number'] }}</strong>
 				</p>
+				<p>
+					<strong>Rechnungsdatum: {{ $date }}</strong>
+				</p>
 				
 				@include('mails.partials.order', array('order' => $order))
 
