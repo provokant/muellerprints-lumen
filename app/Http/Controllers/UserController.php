@@ -349,6 +349,7 @@ class UserController extends Controller
         }
 
         try {
+            $order->delete();
             $order->forceDelete();
             return response('Bestellung wurde erfolgreich gelöscht.', 200);
         } catch (Exception $e) {
