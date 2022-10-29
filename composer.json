@@ -36,6 +36,12 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "platform": {
+            "php": "7.4.30"
+        },
+        "allow-plugins": {
+            "kylekatarnls/update-helper": true
+        }
     }
 }
