@@ -1,7 +1,5 @@
 /vendor
 /.idea
-/public
-/html
 /node_modules
 Homestead.json
 Homestead.yaml
